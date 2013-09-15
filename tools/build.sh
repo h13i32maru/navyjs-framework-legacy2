@@ -1,7 +1,7 @@
 #!/bin/bash
 
 files="\
-    src/wrap_header.txt\
+    src/wrap/header.txt\
     src/init.js\
     src/class.js\
     src/notify.js\
@@ -13,7 +13,7 @@ files="\
     src/root.js\
     src/scene.js\
     src/resource_manager.js\
-    src/wrap_footer.txt\
+    src/wrap/footer.txt\
     "
 
 rm -f build/navy.js build/navy.min.js
