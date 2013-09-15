@@ -3,8 +3,8 @@
 files="\
     src/wrap/header.txt\
     src/init.js\
-    src/class.js\
-    src/notify.js\
+    src/lib/class.js\
+    src/lib/notify.js\
     src/app.js\
     src/screen.js\
     src/view/view.js\
