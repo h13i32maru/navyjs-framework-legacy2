@@ -2,6 +2,7 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
   CLASSNAME: 'Navy.ViewGroup.ViewGroup',
 
   _views: null,
+  _initCallback: null,
 
   /**
    * @param $super
@@ -14,18 +15,16 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     this._views = {};
 
     if (layout && layout.extra.contentLayoutFile) {
-      Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, this._onLoadLayout.bind(this, callback));
+      callback = callback || function(){};
+      this._initCallback = callback.bind(null, this);
+      Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, this._onLoadContentLayout.bind(this));
     } else {
       callback && callback(this);
     }
   },
 
-  _onLoadLayout: function(callback) {
-    var contentLayoutFile = this._layout.extra.contentLayoutFile;
-    var contentLayouts = Navy.ResourceManager.getLayout(contentLayoutFile);
-
-    callback = callback || function(){};
-    var notify = new Navy.Notify(contentLayouts.length, callback.bind(null, this));
+  _onLoadContentLayout: function(contentLayouts) {
+    var notify = new Navy.Notify(contentLayouts.length, this._initCallback);
     var pass = notify.pass.bind(notify);
 
     for (var i = 0; i < contentLayouts.length; i++) {

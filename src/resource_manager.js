@@ -12,13 +12,21 @@ Navy.ResourceManager = Navy.Class.instance({
   },
 
   loadLayout: function(layoutFile, callback) {
+    if (this._layouts[layoutFile]) {
+      var layoutText = this._layouts[layoutFile];
+      var layout = JSON.parse(layoutText);
+      callback(layout);
+      return;
+    }
+
     var xhr = new XMLHttpRequest();
     xhr.open('GET', layoutFile);
     xhr.onload = function(ev){
       var xhr = ev.target;
-      var layout = xhr.responseText;
-      this._layouts[layoutFile] = layout;
-      callback();
+      var layoutText = xhr.responseText;
+      this._layouts[layoutFile] = layoutText;
+      var layout = JSON.parse(layoutText);
+      callback(layout);
     }.bind(this);
     xhr.send();
   },
@@ -40,15 +48,6 @@ Navy.ResourceManager = Navy.Class.instance({
       callback();
     }.bind(this);
     image.src = imageFile;
-  },
-
-  getLayout: function(layoutFile) {
-    var layout = this._layouts[layoutFile];
-    if (layout) {
-      return JSON.parse(layout);
-    } else {
-      throw new Error('not loaded layout. layoutFile = ' + layoutFile);
-    }
   },
 
   getClass: function(className) {
