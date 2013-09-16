@@ -32,6 +32,11 @@ Navy.ResourceManager = Navy.Class.instance({
   },
 
   loadScript: function(scriptFile, callback) {
+    if (this._scripts[scriptFile]) {
+      callback();
+      return;
+    }
+
     var scriptElm = document.createElement('script');
     scriptElm.onload = function(){
       this._scripts[scriptFile] = true;
@@ -42,10 +47,15 @@ Navy.ResourceManager = Navy.Class.instance({
   },
 
   loadImage: function(imageFile, callback) {
+    if (this._images[imageFile]) {
+      callback(imageFile);
+      return;
+    }
+
     var image = new Image();
     image.onload = function(){
       this._images[imageFile] = true;
-      callback();
+      callback(imageFile);
     }.bind(this);
     image.src = imageFile;
   },
