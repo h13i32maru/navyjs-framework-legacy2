@@ -29,20 +29,5 @@ Navy.Screen = Navy.Class.instance({
     this._screenElm = document.body;
 
     Navy.Root.initialize(this._screenElm);
-  },
-
-  createScene: function(sceneName, callback) {
-    var layout = Navy.Config.scene[sceneName];
-    Navy.ResourceManager.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
-  },
-
-  createPage: function(pageName, callback) {
-    var layout = Navy.Config.page[pageName];
-    Navy.ResourceManager.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
-  },
-
-  _onLoadScript: function(layout, callback) {
-    var _class = Navy.ResourceManager.getClass(layout.class);
-    new _class(layout, callback);
   }
 });

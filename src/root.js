@@ -23,7 +23,7 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
   },
 
   nextScene: function(sceneName) {
-    Navy.Screen.createScene(sceneName, this._addScene.bind(this));
+    this._createScene(sceneName, this._addScene.bind(this));
   },
 
   backScene: function() {
@@ -35,6 +35,16 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
       currentStackObj.scene.onPauseBefore();
       currentStackObj.transition.back(this._onTransitionBackEnd.bind(this));
     }
+  },
+
+  _createScene: function(sceneName, callback) {
+    var layout = Navy.Config.scene[sceneName];
+    Navy.ResourceManager.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
+  },
+
+  _onLoadScript: function(layout, callback) {
+    var _class = Navy.ResourceManager.getClass(layout.class);
+    new _class(layout, callback);
   },
 
   _addScene: function(scene) {

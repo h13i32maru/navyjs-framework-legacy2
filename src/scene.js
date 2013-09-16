@@ -4,42 +4,24 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   _pageStack: null,
 
   initialize: function($super, layout, callback){
-    var notify = new Navy.Notify(4, callback.bind(null, this));
+    this._pageStack = [];
+
+    var notify = new Navy.Notify(3, function(){
+      this.nextPage(layout.extra.page, callback.bind(null, this));
+    }.bind(this));
     var pass = notify.pass.bind(notify);
 
     $super(layout, pass);
 
-    var bottomLayout = {
-      class: 'Navy.Page',
-      id: '$bottom',
-      pos: {x:0, y:0},
-      size: {width: layout.size.width, height: layout.size.height},
-      extra: {
-        contentLayoutFile: layout.extra.contentBottomLayoutFile
-      }
-    };
+    var bottomLayout = this._getBottomPageLayout(layout);
+    this._createPageByLayout(bottomLayout, function(page){
+      this.addView(page);
+      pass();
+    }.bind(this));
 
-    var bottomPage = new Navy.Page(bottomLayout, pass);
-    this.addView(bottomPage);
-
-    var topLayout = {
-      class: 'Navy.Page',
-      id: '$top',
-      pos: {x:0, y:0, z:100},
-      size: {width: layout.size.width, height: layout.size.height},
-      extra: {
-        contentLayoutFile: layout.extra.contentTopLayoutFile
-      }
-    };
-
-    var topPage = new Navy.Page(topLayout, pass);
-    this.addView(topPage);
-
-    this._pageStack = [];
-    var pageName = layout.extra.page;
-
-    Navy.Screen.createPage(pageName, function(page){
-      this.addPage(page);
+    var topLayout = this._getTopPageLayout(layout);
+    this._createPageByLayout(topLayout, function(page){
+      this.addView(page);
       pass();
     }.bind(this));
 
@@ -55,6 +37,21 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
       }
     }.bind(this);
     this._element.addEventListener('touchend', cb);
+  },
+
+  nextPage: function(pageName, callback) {
+    this._createPage(pageName, function(page){
+      this._addPage(page);
+      callback && callback(page);
+    }.bind(this));
+  },
+
+  backPage: function() {
+    if (this._pageStack.length >= 2) {
+      var stackObj = this._pageStack[this._pageStack.length - 1];
+      var transition = stackObj.transition;
+      transition.back(this._onTransitionBackEnd.bind(this));
+    }
   },
 
   onCreate: function() {
@@ -81,7 +78,50 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     console.log('onDestroy', this.CLASSNAME);
   },
 
-  addPage: function(page) {
+  _getBottomPageLayout: function(layout) {
+    var bottomLayout = {
+      class: 'Navy.Page',
+      id: '$bottom',
+      pos: {x:0, y:0},
+      size: {width: layout.size.width, height: layout.size.height},
+      extra: {
+        contentLayoutFile: layout.extra.contentBottomLayoutFile
+      }
+    };
+
+    return bottomLayout;
+  },
+
+  _getTopPageLayout: function(layout) {
+    var topLayout = {
+      class: 'Navy.Page',
+      id: '$top',
+      pos: {x:0, y:0, z:100},
+      size: {width: layout.size.width, height: layout.size.height},
+      extra: {
+        contentLayoutFile: layout.extra.contentTopLayoutFile
+      }
+    };
+
+    return topLayout;
+  },
+
+  _createPage: function(pageName, callback) {
+    var layout = Navy.Config.page[pageName];
+    Navy.ResourceManager.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
+  },
+
+  _createPageByLayout: function(layout, callback) {
+    var _class = Navy.ResourceManager.getClass(layout.class);
+    new _class(layout, callback);
+  },
+
+  _onLoadScript: function(layout, callback) {
+    var _class = Navy.ResourceManager.getClass(layout.class);
+    new _class(layout, callback);
+  },
+
+  _addPage: function(page) {
     page.onCreate();
     page.onResumeBefore();
 
@@ -98,18 +138,6 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     });
     this.addView(page);
     transition.start(this._onTransitionStartEnd.bind(this));
-  },
-
-  nextPage: function(pageName) {
-    Navy.Screen.createPage(pageName, this.addPage.bind(this));
-  },
-
-  backPage: function() {
-    if (this._pageStack.length >= 2) {
-      var stackObj = this._pageStack[this._pageStack.length - 1];
-      var transition = stackObj.transition;
-      transition.back(this._onTransitionBackEnd.bind(this));
-    }
   },
 
   _getCurrentStack: function() {
