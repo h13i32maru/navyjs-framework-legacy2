@@ -6,6 +6,32 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   initialize: function($super, layout, callback){
     $super(layout);
 
+    var bottomLayout = {
+      class: 'Navy.Page',
+      id: '$bottom',
+      pos: {x:0, y:0},
+      size: {width: layout.size.width, height: layout.size.height},
+      extra: {
+        contentLayoutFile: layout.extra.contentBottomLayoutFile
+      }
+    };
+
+    var bottomPage = new Navy.Page(bottomLayout);
+    this.addView(bottomPage);
+
+    var topLayout = {
+      class: 'Navy.Page',
+      id: '$top',
+      pos: {x:0, y:0, z:100},
+      size: {width: layout.size.width, height: layout.size.height},
+      extra: {
+        contentLayoutFile: layout.extra.contentTopLayoutFile
+      }
+    };
+
+    var topPage = new Navy.Page(topLayout);
+    this.addView(topPage);
+
     this._pageStack = [];
     var pageName = layout.extra.page;
 

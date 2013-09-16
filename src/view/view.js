@@ -17,6 +17,7 @@ Navy.View.View = Navy.Class({
         position: 'absolute',
         left: layout.pos.x + 'px',
         top: layout.pos.y + 'px',
+        'z-index': layout.pos.z,
         width: layout.size.width + 'px',
         height: layout.size.height + 'px',
         'background-color': layout.backgroundColor

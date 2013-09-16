@@ -6,7 +6,8 @@
     "pos": {"x": 0, "y": 0},
     "size": {"width": 640, "height": 960},
     "extra": {
-      "contentLayoutFile": "layout/scene1.json",
+      "contentTopLayoutFile": "layout/scene1_top.json",
+      "contentBottomLayoutFile": "layout/scene1_bottom.json",
       "page": "Page1"
     }
   }
