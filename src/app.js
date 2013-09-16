@@ -7,6 +7,6 @@ Navy.App = Navy.Class.instance({
   },
 
   _onInitConfig: function(){
-    Navy.Screen.initialize();
+    Navy.Root.initialize();
   }
 });

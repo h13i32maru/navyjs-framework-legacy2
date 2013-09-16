@@ -7,7 +7,6 @@ files="\
     src/lib/*.js\
     src/app.js\
     src/config.js\
-    src/screen.js\
     src/view/view.js\
     src/view/*.js\
     src/view_group/view_group.js\
