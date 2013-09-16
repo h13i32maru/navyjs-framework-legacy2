@@ -7,42 +7,58 @@ Navy.View.View = Navy.Class({
 
   /**
    *
+   * @param {function} callback
    * @param {ViewLayout} layout
    */
   initialize: function(layout, callback) {
     var element = document.createElement('div');
+
+    this._layout = layout;
+    this._element = element;
 
     if (layout) {
       var style = {
         position: 'absolute',
         left: layout.pos.x + 'px',
         top: layout.pos.y + 'px',
-        'z-index': layout.pos.z,
+        zIndex: layout.pos.z,
         width: layout.size.width + 'px',
         height: layout.size.height + 'px',
-        'background-color': layout.backgroundColor
+        backgroundColor: layout.backgroundColor
       };
-      var cssText = this.convertStyleToCSSText(style);
-      element.style.cssText = cssText;
+      this.setRawStyle(style);
     }
-
-    this._layout = layout;
-
-    this._element = element;
 
     callback && callback(this);
   },
 
-  convertStyleToCSSText: function(style) {
+  setRawStyle: function(style) {
     var cssText = '';
     for (var key in style) {
       var value = style[key];
       if (value !== undefined) {
-        cssText += key + ':' + value + ';';
+        var propertyName = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+        if (propertyName.indexOf('webkit') === 0) {
+          propertyName = '-' + propertyName;
+        }
+
+        if (value === '') {
+          this._element.style[key] = '';
+        } else {
+          cssText += propertyName + ':' + value + ';';
+        }
       }
     }
 
-    return cssText;
+    this._element.style.cssText += cssText;
+  },
+
+  addRawEventListener: function(eventName, callback) {
+    this._element.addEventListener(eventName, callback);
+  },
+
+  removeRawEventListener: function(eventName, callback) {
+    this._element.removeEventListener(eventName, callback);
   },
 
   getId: function(){
