@@ -11,10 +11,8 @@ Navy.View.View = Navy.Class({
    * @param {ViewLayout} layout
    */
   initialize: function(layout, callback) {
-    var element = document.createElement('div');
-
     this._layout = layout;
-    this._element = element;
+    this._element = document.createElement('div');
 
     if (layout) {
       var style = {

@@ -2,15 +2,14 @@
 
 files="\
     src/wrap_text/header.txt\
+
     src/init.js\
-    src/lib/class.js\
-    src/lib/notify.js\
+    src/lib/*.js\
     src/app.js\
     src/config.js\
     src/screen.js\
     src/view/view.js\
-    src/view/text.js\
-    src/view/image.js\
+    src/view/*.js\
     src/view_group/view_group.js\
     src/root.js\
     src/scene.js\

@@ -5,6 +5,7 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
    *
    * @param $super
    * @param {TextLayout} layout
+   * @param {function} callback
    */
   initialize: function($super, layout, callback) {
     $super(layout);

@@ -16,6 +16,5 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
   _onLoadImage: function(src, callback){
     this._imgElm.src = src;
     callback && callback(this);
-
   }
 });
