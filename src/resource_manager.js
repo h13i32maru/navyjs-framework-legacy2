@@ -3,10 +3,12 @@ Navy.ResourceManager = Navy.Class.instance({
 
   _layouts: null,
   _scripts: null,
+  _images: null,
 
   initialize: function(){
     this._layouts = {};
     this._scripts = {};
+    this._images = {};
   },
 
   loadLayout: function(layoutFile, callback) {
@@ -29,6 +31,15 @@ Navy.ResourceManager = Navy.Class.instance({
     }.bind(this);
     scriptElm.src = scriptFile;
     document.head.appendChild(scriptElm);
+  },
+
+  loadImage: function(imageFile, callback) {
+    var image = new Image();
+    image.onload = function(){
+      this._images[imageFile] = true;
+      callback();
+    }.bind(this);
+    image.src = imageFile;
   },
 
   getLayout: function(layoutFile) {
