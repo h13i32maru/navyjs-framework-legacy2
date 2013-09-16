@@ -25,8 +25,9 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     scene.onCreate();
     scene.onResumeBefore();
 
-    if (this._sceneStack.length !== 0) {
-      var beforeScene = this._sceneStack[this._sceneStack.length - 1].scene;
+    var currentStackObj = this._getCurrentStack();
+    if (currentStackObj) {
+      var beforeScene = currentStackObj.scene;
       beforeScene.onPauseBefore();
     }
 

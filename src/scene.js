@@ -58,32 +58,37 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   },
 
   onCreate: function() {
-    console.log('onCreate');
+    console.log('onCreate', this.CLASSNAME);
   },
 
   onResumeBefore: function(){
-    console.log('onResumeBefore');
+    console.log('onResumeBefore', this.CLASSNAME);
   },
 
   onResumeAfter: function(){
-    console.log('onResumeAfter');
+    console.log('onResumeAfter', this.CLASSNAME);
   },
 
   onPauseBefore: function(){
-    console.log('onPauseBefore');
+    console.log('onPauseBefore', this.CLASSNAME);
   },
 
   onPauseAfter: function(){
-    console.log('onPauseAfter');
+    console.log('onPauseAfter', this.CLASSNAME);
   },
 
   onDestroy: function(){
-    console.log('onDestroy');
+    console.log('onDestroy', this.CLASSNAME);
   },
 
   addPage: function(page) {
-    if (this._pageStack.length !== 0) {
-      var beforePage = this._pageStack[this._pageStack.length - 1].page;
+    page.onCreate();
+    page.onResumeBefore();
+
+    var currentStackObj = this._getCurrentStack();
+    if (currentStackObj) {
+      var beforePage = currentStackObj.page;
+      beforePage.onPauseBefore();
     }
 
     var transition = new Navy.Transition.SlideOver(beforePage, page);
@@ -92,7 +97,7 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
       transition: transition
     });
     this.addView(page);
-    transition.start();
+    transition.start(this._onTransitionStartEnd.bind(this));
   },
 
   nextPage: function(pageName) {
@@ -107,8 +112,47 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     }
   },
 
+  _getCurrentStack: function() {
+    if (this._pageStack.length >= 1) {
+      return this._pageStack[this._pageStack.length - 1];
+    } else {
+      return null;
+    }
+  },
+
+  _getPrevStack: function(){
+    if (this._pageStack.length >= 2) {
+      return this._pageStack[this._pageStack.length - 2];
+    } else {
+      return null;
+    }
+  },
+
+  _onTransitionStartEnd: function(){
+    var prevStackObj = this._getPrevStack();
+    if (prevStackObj) {
+      prevStackObj.page.onPauseAfter();
+    }
+
+    var currentStackObj = this._getCurrentStack();
+    if (currentStackObj) {
+      currentStackObj.page.onResumeAfter();
+    }
+  },
+
   _onTransitionBackEnd: function(){
-    var stackObj = this._pageStack.pop();
-    stackObj.page.destroy();
+    var prevStackObj = this._getPrevStack();
+    if (prevStackObj) {
+      prevStackObj.page.onResumeAfter();
+    }
+
+    var currentStackObj = this._getCurrentStack();
+    if (currentStackObj) {
+      currentStackObj.page.onPauseAfter();
+      currentStackObj.page.onDestroy();
+
+      var stackObj = this._pageStack.pop();
+      stackObj.page.destroy();
+    }
   }
 });
