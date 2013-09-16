@@ -15,7 +15,7 @@ Navy.Resource = Navy.Class.instance({
     if (this._layouts[layoutFile]) {
       var layoutText = this._layouts[layoutFile];
       var layout = JSON.parse(layoutText);
-      callback(layout);
+      callback && setTimeout(callback.bind(null, layout), 0);
       return;
     }
 
@@ -33,7 +33,7 @@ Navy.Resource = Navy.Class.instance({
 
   loadScript: function(scriptFile, callback) {
     if (this._scripts[scriptFile]) {
-      callback();
+      callback && setTimeout(callback, 0);
       return;
     }
 
@@ -48,7 +48,7 @@ Navy.Resource = Navy.Class.instance({
 
   loadImage: function(imageFile, callback) {
     if (this._images[imageFile]) {
-      callback(imageFile);
+      callback && setTimeout(callback.bind(null, imageFile), 0);
       return;
     }
 

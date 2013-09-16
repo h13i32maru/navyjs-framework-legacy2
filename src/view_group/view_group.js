@@ -19,7 +19,7 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
       this._initCallback = callback.bind(null, this);
       Navy.Resource.loadLayout(layout.extra.contentLayoutFile, this._onLoadContentLayout.bind(this));
     } else {
-      callback && callback(this);
+      callback && setTimeout(callback.bind(null, this), 0);
     }
   },
 

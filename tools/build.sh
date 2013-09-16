@@ -2,20 +2,16 @@
 
 files="\
     src/wrap_text/header.txt\
-
     src/init.js\
     src/lib/*.js\
-
+    src/core/*.js\
     src/view/view.js\
     src/view/*.js\
-
     src/view_group/view_group.js\
-
-    src/*.js\
-
+    src/view_group/*.js\
+    src/view_screen/*.js\
     src/transition/transition.js\
     src/transition/*.js\
-
     src/wrap_text/footer.txt\
     "
 

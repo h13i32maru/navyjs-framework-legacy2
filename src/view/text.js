@@ -12,6 +12,6 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
 
     this._element.textContent = layout.extra.text;
 
-    callback && callback(this);
+    callback && setTimeout(callback.bind(null, this), 0);
   }
 });

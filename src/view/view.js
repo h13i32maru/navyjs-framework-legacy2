@@ -27,7 +27,7 @@ Navy.View.View = Navy.Class({
       this.setRawStyle(style);
     }
 
-    callback && callback(this);
+    callback && setTimeout(callback.bind(null, this), 0);
   },
 
   setRawStyle: function(style) {
@@ -77,6 +77,27 @@ Navy.View.View = Navy.Class({
 
   hide: function() {
     this._element.style.display = 'none';
+  },
+
+  setPos: function(pos) {
+    var cssText = '';
+
+    if (typeof pos.x === 'number') {
+      this._layout.pos.x = pos.x;
+      cssText += 'left:' + pos.x + 'px';
+    }
+
+    if (typeof pos.y === 'number') {
+      this._layout.pos.y = pos.y;
+      cssText += 'top:' + pos.y + 'px';
+    }
+
+    if (typeof pos.z === 'number') {
+      this._layout.pos.z = pos.z;
+      cssText += 'z-index:' + pos.z;
+    }
+
+    this._element.style.cssText += cssText;
   },
 
   destroy: function() {
