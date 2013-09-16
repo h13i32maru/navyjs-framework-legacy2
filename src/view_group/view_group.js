@@ -4,7 +4,6 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
   _views: null,
 
   /**
-   *
    * @param $super
    * @param {ViewGroupLayout} layout
    * @param callback
