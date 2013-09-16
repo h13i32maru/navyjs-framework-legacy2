@@ -4,6 +4,7 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
   _sceneStack: null,
 
   /**
+   * @param $super
    * @param {HTMLElement} parentElm
    */
   initialize: function($super, parentElm) {
@@ -21,7 +22,22 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     this.nextScene(startSceneName);
   },
 
-  addScene: function(scene) {
+  nextScene: function(sceneName) {
+    Navy.Screen.createScene(sceneName, this._addScene.bind(this));
+  },
+
+  backScene: function() {
+    if (this._sceneStack.length >= 2) {
+      var prevStackObj = this._getPrevStack();
+      prevStackObj.scene.onResumeBefore();
+
+      var currentStackObj = this._getCurrentStack();
+      currentStackObj.scene.onPauseBefore();
+      currentStackObj.transition.back(this._onTransitionBackEnd.bind(this));
+    }
+  },
+
+  _addScene: function(scene) {
     scene.onCreate();
     scene.onResumeBefore();
 
@@ -40,19 +56,9 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     transition.start(this._onTransitionStartEnd.bind(this));
   },
 
-  nextScene: function(sceneName) {
-    Navy.Screen.createScene(sceneName, this.addScene.bind(this));
-  },
-
-  backScene: function() {
-    if (this._sceneStack.length >= 2) {
-      var prevStackObj = this._getPrevStack();
-      prevStackObj.scene.onResumeBefore();
-
-      var currentStackObj = this._getCurrentStack();
-      currentStackObj.scene.onPauseBefore();
-      currentStackObj.transition.back(this._onTransitionBackEnd.bind(this));
-    }
+  _removeCurrentScene: function() {
+    var stackObj = this._sceneStack.pop();
+    stackObj.scene.destroy();
   },
 
   _getCurrentStack: function() {
@@ -94,8 +100,7 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
       currentStackObj.scene.onPauseAfter();
       currentStackObj.scene.onDestroy();
 
-      var stackObj = this._sceneStack.pop();
-      stackObj.scene.destroy();
+      this._removeCurrentScene();
     }
   }
 });
