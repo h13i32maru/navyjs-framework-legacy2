@@ -12,63 +12,55 @@ Navy.Transition.SlideOver = Navy.Class({
     this._beforeView = beforeView;
     this._afterView = afterView;
 
-    var width = Navy.Config.app.size.width;
-
     if (!this.$static.initAnimationStyle) {
-      var animIn  = '@-webkit-keyframes slide_over_in  {100% {-webkit-transform: translateX(0)}}';
-      var animOut = '@-webkit-keyframes slide_over_out {100% {-webkit-transform: translateX(%width%px)}}'.replace('%width%', width);
-      var styleElm = document.createElement('style');
-      styleElm.textContent = animIn + animOut;
-      document.head.appendChild(styleElm);
+      this._addAnimationStyle();
       this.$static.initAnimationStyle = true;
     }
 
-    var elm = afterView.getElement();
-    elm.style.webkitAnimation = '0.5s both';
-    elm.style.webkitTransform = 'translateX(%width%px)'.replace('%width%', width);
+    var width = Navy.Config.app.size.width;
+    afterView.setRawStyle({webkitAnimation: '0.5s', webkitTransform: 'translateX(' + width + 'px)'});
+  },
+
+  _addAnimationStyle: function(){
+    var width = Navy.Config.app.size.width;
+    var animIn  = '@-webkit-keyframes slide_over_in  {100% {-webkit-transform: translateX(0)}}';
+    var animOut = '@-webkit-keyframes slide_over_out {100% {-webkit-transform: translateX(%width%px)}}'.replace('%width%', width);
+    var styleElm = document.createElement('style');
+    styleElm.textContent = animIn + animOut;
+    document.head.appendChild(styleElm);
   },
 
   start: function(callback) {
     if (!this._beforeView) {
-      var elm = this._afterView.getElement();
-      elm.style.webkitTransform = '';
+      this._afterView.setRawStyle({webkitTransform: 'none'});
       callback && callback();
       return;
     }
 
-    var elm = this._afterView.getElement();
-
     var cb = function(){
       this._beforeView.hide();
-      var elm = this._afterView.getElement();
-      elm.removeEventListener('webkitAnimationEnd', cb);
-      elm.style.webkitTransform = '';
-      elm.style.webkitAnimationName = '';
+      this._afterView.removeRawEventListener('webkitAnimationEnd', cb);
+      this._afterView.setRawStyle({webkitTransform: 'none', webkitAnimationName: 'none'});
       callback && callback();
     }.bind(this);
 
-    elm.addEventListener('webkitAnimationEnd', cb);
-
-    elm.style.webkitAnimationName = 'slide_over_in';
+    this._afterView.addRawEventListener('webkitAnimationEnd', cb);
+    this._afterView.setRawStyle({webkitAnimationName: 'slide_over_in'});
   },
 
   back: function(callback) {
     if (!this._beforeView) {
+      callback && callback();
       return;
     }
 
-    this._beforeView.show();
-    var elm = this._afterView.getElement();
-
     var cb = function(){
-      var elm = this._afterView.getElement();
-      elm.removeEventListener('webkitAnimationEnd', cb);
+      this._afterView.removeRawEventListener('webkitAnimationEnd', cb);
       callback && callback();
     }.bind(this);
 
-    elm.addEventListener('webkitAnimationEnd', cb);
-
-    elm.style.webkitAnimationName = 'slide_over_out';
-
+    this._beforeView.show();
+    this._afterView.addRawEventListener('webkitAnimationEnd', cb);
+    this._afterView.setRawStyle({webkitAnimationName: 'slide_over_out'});
   }
 });

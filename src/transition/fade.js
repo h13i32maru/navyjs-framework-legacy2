@@ -57,6 +57,7 @@ Navy.Transition.Fade = Navy.Class({
 
   back: function(callback) {
     if (!this._beforeView) {
+      callback && callback();
       return;
     }
 
