@@ -1,4 +1,4 @@
-Navy.Transition.SlideOver = Navy.Class({
+Navy.Transition.SlideOver = Navy.Class(Navy.Transition.Transition, {
   CLASSNAME: 'Navy.Transition.SlideOver',
 
   $static: {

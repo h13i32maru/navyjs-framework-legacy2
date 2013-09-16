@@ -1,7 +1,7 @@
 #!/bin/bash
 
 files="\
-    src/wrap/header.txt\
+    src/wrap_text/header.txt\
     src/init.js\
     src/lib/class.js\
     src/lib/notify.js\
@@ -16,13 +16,26 @@ files="\
     src/scene.js\
     src/page.js\
     src/resource_manager.js\
+
+    src/transition/transition.js\
     src/transition/*.js\
-    src/wrap/footer.txt\
+
+    src/wrap_text/footer.txt\
     "
 
 rm -f build/navy.js build/navy.min.js
 for file in $files
 do
+    if [ -f build/navy.js ]
+    then
+        grep "^// file: $file" build/navy.js > /dev/null 2>&1
+        if [ $? -eq 0 ]
+        then
+            continue
+        fi
+    fi
+    echo "$file"
+    echo -e "\n// file: $file" >> build/navy.js
     cat $file >> build/navy.js
 done
 
