@@ -5,7 +5,6 @@
     "classFile": "class/scene1.js",
     "pos": {"x": 0, "y": 0},
     "size": {"width": 640, "height": 960},
-    "backgroundColor": "#ff0000",
     "extra": {
       "contentLayoutFile": "layout/scene1.json",
       "page": "Page1"

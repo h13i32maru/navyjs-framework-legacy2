@@ -1,6 +1,7 @@
 window.Navy = {
   View: {},
-  ViewGroup: {}
+  ViewGroup: {},
+  Transition: {}
 };
 
 window.addEventListener('DOMContentLoaded', function(){

@@ -8,9 +8,8 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     $super();
 
     var rootElm = document.createElement('div');
-    rootElm.style.cssText = 'position:absolute; width:100%; height:100%;';
+    rootElm.style.cssText = 'position:absolute; width:100%; height:100%; overflow:hidden;';
     parentElm.appendChild(rootElm);
-    rootElm.style.backgroundColor = 'red';
 
     this._element = rootElm;
 

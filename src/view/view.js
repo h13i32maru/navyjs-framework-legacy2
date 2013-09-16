@@ -58,5 +58,17 @@ Navy.View.View = Navy.Class({
 
   getParentElement: function(){
     return this._parentElement;
+  },
+
+  show: function() {
+    this._element.style.display = '';
+  },
+
+  hide: function() {
+    this._element.style.display = 'none';
+  },
+
+  destroy: function() {
+//    this._parentView.remove(this);
   }
 });

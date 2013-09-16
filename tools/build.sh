@@ -16,6 +16,7 @@ files="\
     src/scene.js\
     src/page.js\
     src/resource_manager.js\
+    src/transition/*.js\
     src/wrap/footer.txt\
     "
 
