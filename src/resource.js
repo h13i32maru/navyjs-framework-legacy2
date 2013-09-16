@@ -1,5 +1,5 @@
-Navy.ResourceManager = Navy.Class.instance({
-  CLASSNAME: 'Navy.ResourceManager',
+Navy.Resource = Navy.Class.instance({
+  CLASSNAME: 'Navy.Resource',
 
   _layouts: null,
   _scripts: null,

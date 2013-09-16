@@ -17,7 +17,7 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     if (layout && layout.extra.contentLayoutFile) {
       callback = callback || function(){};
       this._initCallback = callback.bind(null, this);
-      Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, this._onLoadContentLayout.bind(this));
+      Navy.Resource.loadLayout(layout.extra.contentLayoutFile, this._onLoadContentLayout.bind(this));
     } else {
       callback && callback(this);
     }
@@ -29,7 +29,7 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
 
     for (var i = 0; i < contentLayouts.length; i++) {
       var contentLayout = contentLayouts[i];
-      var _class = Navy.ResourceManager.getClass(contentLayout.class);
+      var _class = Navy.Resource.getClass(contentLayout.class);
       var view = new _class(contentLayout, pass);
       this.addView(view);
     }

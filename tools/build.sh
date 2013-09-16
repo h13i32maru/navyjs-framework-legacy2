@@ -5,15 +5,13 @@ files="\
 
     src/init.js\
     src/lib/*.js\
-    src/app.js\
-    src/config.js\
+
     src/view/view.js\
     src/view/*.js\
+
     src/view_group/view_group.js\
-    src/root.js\
-    src/scene.js\
-    src/page.js\
-    src/resource_manager.js\
+
+    src/*.js\
 
     src/transition/transition.js\
     src/transition/*.js\

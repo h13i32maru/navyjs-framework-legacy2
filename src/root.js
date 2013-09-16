@@ -66,11 +66,11 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
 
   _createScene: function(sceneName, callback) {
     var layout = Navy.Config.scene[sceneName];
-    Navy.ResourceManager.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
+    Navy.Resource.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
   },
 
   _onLoadScript: function(layout, callback) {
-    var _class = Navy.ResourceManager.getClass(layout.class);
+    var _class = Navy.Resource.getClass(layout.class);
     new _class(layout, callback);
   },
 

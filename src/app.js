@@ -2,7 +2,7 @@ Navy.App = Navy.Class.instance({
   CLASSNAME: 'Navy.App',
 
   initialize: function(){
-    Navy.ResourceManager.initialize();
+    Navy.Resource.initialize();
     Navy.Config.initialize(this._onInitConfig.bind(this));
   },
 

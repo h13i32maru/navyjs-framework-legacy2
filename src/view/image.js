@@ -10,7 +10,7 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
     this._element.appendChild(imgElm);
     this._imgElm = imgElm;
 
-    Navy.ResourceManager.loadImage(layout.extra.src, function(src){
+    Navy.Resource.loadImage(layout.extra.src, function(src){
       this._onLoadImage(src);
       callback && callback(this);
     }.bind(this));
