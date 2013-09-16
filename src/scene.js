@@ -31,23 +31,18 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   addPage: function(page) {
     if (this._pageStack.length !== 0) {
       var beforePage = this._pageStack[this._pageStack.length - 1].page;
-      var transition = new Navy.Transition.SlideOver(beforePage, page);
-      this._pageStack.push({
-        page: page,
-        transition: transition
-      });
-      this.addView(page);
-      transition.start();
-    } else {
-      this._pageStack.push({
-        page: page,
-        transition: null
-      });
-      this.addView(page);
     }
+
+    var transition = new Navy.Transition.SlideOver(beforePage, page);
+    this._pageStack.push({
+      page: page,
+      transition: transition
+    });
+    this.addView(page);
+    transition.start();
   },
 
-  goToPage: function(pageName) {
+  nextPage: function(pageName) {
     Navy.Screen.createPage(pageName, this.addPage.bind(this));
   },
 

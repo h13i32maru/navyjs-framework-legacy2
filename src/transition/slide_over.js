@@ -20,6 +20,7 @@ Navy.Transition.SlideOver = Navy.Class({
       var styleElm = document.createElement('style');
       styleElm.textContent = animIn + animOut;
       document.head.appendChild(styleElm);
+      this.$static.initAnimationStyle = true;
     }
 
     var elm = afterView.getElement();
@@ -28,6 +29,13 @@ Navy.Transition.SlideOver = Navy.Class({
   },
 
   start: function(callback) {
+    if (!this._beforeView) {
+      var elm = this._afterView.getElement();
+      elm.style.webkitTransform = '';
+      callback && callback();
+      return;
+    }
+
     var elm = this._afterView.getElement();
 
     var cb = function(){
@@ -45,6 +53,10 @@ Navy.Transition.SlideOver = Navy.Class({
   },
 
   back: function(callback) {
+    if (!this._beforeView) {
+      return;
+    }
+
     this._beforeView.show();
     var elm = this._afterView.getElement();
 
