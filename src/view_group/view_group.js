@@ -14,21 +14,25 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     this._views = {};
 
     if (layout && layout.extra.contentLayoutFile) {
-      var contentLayoutFile = layout.extra.contentLayoutFile;
-      var contentLayouts = Navy.ResourceManager.getLayout(contentLayoutFile);
-
-      callback = callback || function(){};
-      var notify = new Navy.Notify(contentLayouts.length, callback.bind(null, this));
-      var pass = notify.pass.bind(notify);
-
-      for (var i = 0; i < contentLayouts.length; i++) {
-        var contentLayout = contentLayouts[i];
-        var _class = Navy.ResourceManager.getClass(contentLayout.class);
-        var view = new _class(contentLayout, pass);
-        this.addView(view);
-      }
+      Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, this._onLoadLayout.bind(this, callback));
     } else {
       callback && callback(this);
+    }
+  },
+
+  _onLoadLayout: function(callback) {
+    var contentLayoutFile = this._layout.extra.contentLayoutFile;
+    var contentLayouts = Navy.ResourceManager.getLayout(contentLayoutFile);
+
+    callback = callback || function(){};
+    var notify = new Navy.Notify(contentLayouts.length, callback.bind(null, this));
+    var pass = notify.pass.bind(notify);
+
+    for (var i = 0; i < contentLayouts.length; i++) {
+      var contentLayout = contentLayouts[i];
+      var _class = Navy.ResourceManager.getClass(contentLayout.class);
+      var view = new _class(contentLayout, pass);
+      this.addView(view);
     }
   },
 

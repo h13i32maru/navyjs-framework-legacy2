@@ -33,21 +33,15 @@ Navy.Screen = Navy.Class.instance({
 
   createScene: function(sceneName, callback) {
     var layout = Navy.Config.scene[sceneName];
-    var notify = new Navy.Notify(2, this._onLoadResource.bind(this, layout, callback));
-    var pass = notify.pass.bind(notify);
-    Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, pass);
-    Navy.ResourceManager.loadScript(layout.classFile, pass);
+    Navy.ResourceManager.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
   },
 
   createPage: function(pageName, callback) {
     var layout = Navy.Config.page[pageName];
-    var notify = new Navy.Notify(2, this._onLoadResource.bind(this, layout, callback));
-    var pass = notify.pass.bind(notify);
-    Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, pass);
-    Navy.ResourceManager.loadScript(layout.classFile, pass);
+    Navy.ResourceManager.loadScript(layout.classFile, this._onLoadScript.bind(this, layout, callback));
   },
 
-  _onLoadResource: function(layout, callback) {
+  _onLoadScript: function(layout, callback) {
     var _class = Navy.ResourceManager.getClass(layout.class);
     new _class(layout, callback);
   }
