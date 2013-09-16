@@ -14,31 +14,16 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     $super(layout, function(){
       var views = this._views;
       for (var name in views) {
-        console.log(name);
         views[name].setPos({z: 100});
       }
       this.nextPage(layout.extra.page, callback.bind(null, this));
-    }.bind(this));
-
-    /*
-    var bottomLayout = this._getBottomPageLayout(layout);
-    this._createPageByLayout(bottomLayout, function(page){
-      this.addView(page);
-      pass();
-    }.bind(this));
-
-    var topLayout = this._getTopPageLayout(layout);
-    this._createPageByLayout(topLayout, function(page){
-      this.addView(page);
-      pass();
 
       //FIXME: remove debug code
-      page.addRawEventListener('touchend', function(ev){
+      views[name].addRawEventListener('touchend', function(ev){
         ev.stopPropagation();
         Navy.Root.nextScene('Scene1');
       });
     }.bind(this));
-    */
 
     //FIXME: remove debug code
     var cb = function(){
