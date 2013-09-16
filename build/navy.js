@@ -232,14 +232,14 @@ Navy.View.View = Navy.Class({
    *
    * @param {ViewLayout} layout
    */
-  initialize: function(layout) {
+  initialize: function(layout, callback) {
     var element = document.createElement('div');
 
     if (layout) {
       var style = {
         position: 'absolute',
-        left: layout.pos.x,
-        top: layout.pos.y,
+        left: layout.pos.x + 'px',
+        top: layout.pos.y + 'px',
         width: layout.size.width + 'px',
         height: layout.size.height + 'px',
         'background-color': layout.backgroundColor
@@ -251,6 +251,8 @@ Navy.View.View = Navy.Class({
     this._layout = layout;
 
     this._element = element;
+
+    callback && callback(this);
   },
 
   convertStyleToCSSText: function(style) {
@@ -289,11 +291,12 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
    * @param $super
    * @param {TextLayout} layout
    */
-  initialize: function($super, layout) {
+  initialize: function($super, layout, callback) {
     $super(layout);
 
-    layout.pos.x++;
     this._element.textContent = layout.extra.text;
+
+    callback && callback(this);
   }
 });
 Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
@@ -301,7 +304,13 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
 
   _views: null,
 
-  initialize: function($super, layout) {
+  /**
+   *
+   * @param $super
+   * @param {ViewGroupLayout} layout
+   * @param callback
+   */
+  initialize: function($super, layout, callback) {
     $super(layout);
 
     this._views = {};
@@ -309,12 +318,19 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     if (layout && layout.extra.contentLayoutFile) {
       var contentLayoutFile = layout.extra.contentLayoutFile;
       var contentLayouts = Navy.ResourceManager.getLayout(contentLayoutFile);
+
+      callback = callback || function(){};
+      var notify = new Navy.Notify(contentLayouts.length, callback.bind(null, this));
+      var pass = notify.pass.bind(notify);
+
       for (var i = 0; i < contentLayouts.length; i++) {
         var contentLayout = contentLayouts[i];
         var _class = Navy.ResourceManager.getClass(contentLayout.class);
-        var view = new _class(contentLayout);
+        var view = new _class(contentLayout, pass);
         this.addView(view);
       }
+    } else {
+      callback && callback(this);
     }
   },
 
@@ -348,9 +364,8 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
 Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   CLASSNAME: 'Navy.Scene',
 
-  initialize: function($super, layout){
-    $super(layout);
-    console.log(layout);
+  initialize: function($super, layout, callback){
+    $super(layout, callback);
   }
 });
 Navy.ResourceManager = Navy.Class.instance({

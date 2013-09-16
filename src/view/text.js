@@ -6,10 +6,11 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
    * @param $super
    * @param {TextLayout} layout
    */
-  initialize: function($super, layout) {
+  initialize: function($super, layout, callback) {
     $super(layout);
 
-    layout.pos.x++;
     this._element.textContent = layout.extra.text;
+
+    callback && callback(this);
   }
 });

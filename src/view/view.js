@@ -9,14 +9,14 @@ Navy.View.View = Navy.Class({
    *
    * @param {ViewLayout} layout
    */
-  initialize: function(layout) {
+  initialize: function(layout, callback) {
     var element = document.createElement('div');
 
     if (layout) {
       var style = {
         position: 'absolute',
-        left: layout.pos.x,
-        top: layout.pos.y,
+        left: layout.pos.x + 'px',
+        top: layout.pos.y + 'px',
         width: layout.size.width + 'px',
         height: layout.size.height + 'px',
         'background-color': layout.backgroundColor
@@ -28,6 +28,8 @@ Navy.View.View = Navy.Class({
     this._layout = layout;
 
     this._element = element;
+
+    callback && callback(this);
   },
 
   convertStyleToCSSText: function(style) {
