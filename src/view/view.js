@@ -2,8 +2,8 @@ Navy.View.View = Navy.Class({
   CLASSNAME: 'Navy.View.View',
 
   _layout: null,
-  _parentElement: null,
   _element: null,
+  _parentView: null,
 
   /**
    *
@@ -44,10 +44,6 @@ Navy.View.View = Navy.Class({
     return cssText;
   },
 
-  onChangeParentElement: function(oldParentElement, newParentElement) {
-    this._parentElement = newParentElement;
-  },
-
   getId: function(){
     return this._layout.id;
   },
@@ -56,8 +52,8 @@ Navy.View.View = Navy.Class({
     return this._element;
   },
 
-  getParentElement: function(){
-    return this._parentElement;
+  setParent: function(parentView) {
+    this._parentView = parentView;
   },
 
   show: function() {
@@ -69,6 +65,7 @@ Navy.View.View = Navy.Class({
   },
 
   destroy: function() {
-//    this._parentView.remove(this);
+    this._parentView.removeView(this);
+    this._element = null;
   }
 });

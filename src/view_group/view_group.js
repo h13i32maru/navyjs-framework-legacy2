@@ -38,11 +38,16 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
 
   addView: function(view) {
     var element = view.getElement();
-    var oldParentElement = view.getParentElement();
-
     this._element.appendChild(element);
     this._views[view.getId()] = view;
+    view.setParent(this);
+  },
 
-    view.onChangeParentElement(oldParentElement, this._element);
+  removeView: function(view) {
+    var element = view.getElement();
+    this._element.removeChild(element);
+    this._views[view.getId()] = null;
+    delete this._views[view.getId()];
+    view.setParent(null);
   }
 });
