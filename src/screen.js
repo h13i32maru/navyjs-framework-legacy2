@@ -3,11 +3,14 @@ Navy.Screen = Navy.Class.instance({
 
   _screenElm: null,
 
-  initialize: function(appConfig, sceneConfig, width, height){
+  initialize: function(){
     var style = '* {margin:0; padding:0;} html {width:100%; height:100%} body {background-color:#000;}';
     var styleElm = document.createElement('style');
     styleElm.textContent = style;
     document.head.appendChild(styleElm);
+
+    var width = Navy.Config.app.size.width;
+    var height = Navy.Config.app.size.height;
 
     var screenWidth = window.innerWidth;
     var screenHeight = window.innerHeight;
@@ -25,20 +28,27 @@ Navy.Screen = Navy.Class.instance({
 
     this._screenElm = document.body;
 
-    var startSceneName = appConfig.start.scene;
-    var layout = sceneConfig[startSceneName];
-
-    Navy.ResourceManager.initialize();
-    var notify = new Navy.Notify(2, this._onLoadResource.bind(this, layout));
-    Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, notify.pass.bind(notify));
-    Navy.ResourceManager.loadScript(layout.classFile, notify.pass.bind(notify));
+    Navy.Root.initialize(this._screenElm);
   },
 
-  _onLoadResource: function(layout) {
-    Navy.Root.initialize(this._screenElm);
+  createScene: function(sceneName, callback) {
+    var layout = Navy.Config.scene[sceneName];
+    var notify = new Navy.Notify(2, this._onLoadResource.bind(this, layout, callback));
+    var pass = notify.pass.bind(notify);
+    Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, pass);
+    Navy.ResourceManager.loadScript(layout.classFile, pass);
+  },
 
+  createPage: function(pageName, callback) {
+    var layout = Navy.Config.page[pageName];
+    var notify = new Navy.Notify(2, this._onLoadResource.bind(this, layout, callback));
+    var pass = notify.pass.bind(notify);
+    Navy.ResourceManager.loadLayout(layout.extra.contentLayoutFile, pass);
+    Navy.ResourceManager.loadScript(layout.classFile, pass);
+  },
+
+  _onLoadResource: function(layout, callback) {
     var _class = Navy.ResourceManager.getClass(layout.class);
-    var startScene = new _class(layout);
-    Navy.Root.addView(startScene);
+    new _class(layout, callback);
   }
 });

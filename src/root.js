@@ -13,5 +13,12 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     rootElm.style.backgroundColor = 'red';
 
     this._element = rootElm;
+
+    var startSceneName = Navy.Config.app.start.scene;
+    Navy.Screen.createScene(startSceneName, this._onCreateScene.bind(this));
+  },
+
+  _onCreateScene: function(scene) {
+    this.addView(scene);
   }
 });

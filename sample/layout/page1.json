@@ -1,0 +1,11 @@
+[
+  {
+    "id": "text",
+    "class": "Navy.View.Text",
+    "pos": {"x": 10, "y": 200},
+    "size": {"width": 80, "height": 80},
+    "extra": {
+      "text": "page1"
+    }
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "Page1": {
+    "id": "page1",
+    "class": "Page1",
+    "classFile": "class/page1.js",
+    "pos": {"x": 0, "y": 100},
+    "size": {"width": 640, "height": 860},
+    "backgroundColor": "#ff0000",
+    "extra": {
+      "contentLayoutFile": "layout/page1.json"
+    }
+  },
+  "Page2": {
+    "id": "page2",
+    "class": "Page2",
+    "classFile": "class/page2.js",
+    "pos": {"x": 0, "y": 100},
+    "size": {"width": 640, "height": 860},
+    "backgroundColor": "#00ff00",
+    "extra": {
+      "contentLayoutFile": "layout/page2.json"
+    }
+  }
+}
