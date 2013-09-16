@@ -18,12 +18,16 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     this._element = rootElm;
 
     var startSceneName = Navy.Config.app.start.scene;
-    Navy.Screen.createScene(startSceneName, this.addScene.bind(this));
+    this.nextScene(startSceneName);
   },
 
   addScene: function(scene) {
+    scene.onCreate();
+    scene.onResumeBefore();
+
     if (this._sceneStack.length !== 0) {
       var beforeScene = this._sceneStack[this._sceneStack.length - 1].scene;
+      beforeScene.onPauseBefore();
     }
 
     var transition = new Navy.Transition.Fade(beforeScene, scene);
@@ -32,7 +36,7 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
       transition: transition
     });
     this.addView(scene);
-    transition.start();
+    transition.start(this._onTransitionStartEnd.bind(this));
   },
 
   nextScene: function(sceneName) {
@@ -41,14 +45,56 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
 
   backScene: function() {
     if (this._sceneStack.length >= 2) {
-      var stackObj = this._sceneStack[this._sceneStack.length - 1];
-      var transition = stackObj.transition;
-      transition.back(this._onTransitionBackEnd.bind(this));
+      var prevStackObj = this._getPrevStack();
+      prevStackObj.scene.onResumeBefore();
+
+      var currentStackObj = this._getCurrentStack();
+      currentStackObj.scene.onPauseBefore();
+      currentStackObj.transition.back(this._onTransitionBackEnd.bind(this));
+    }
+  },
+
+  _getCurrentStack: function() {
+    if (this._sceneStack.length >= 1) {
+      return this._sceneStack[this._sceneStack.length - 1];
+    } else {
+      return null;
+    }
+  },
+
+  _getPrevStack: function(){
+    if (this._sceneStack.length >= 2) {
+      return this._sceneStack[this._sceneStack.length - 2];
+    } else {
+      return null;
+    }
+  },
+
+  _onTransitionStartEnd: function(){
+    var prevStackObj = this._getPrevStack();
+    if (prevStackObj) {
+      prevStackObj.scene.onPauseAfter();
+    }
+
+    var currentStackObj = this._getCurrentStack();
+    if (currentStackObj) {
+      currentStackObj.scene.onResumeAfter();
     }
   },
 
   _onTransitionBackEnd: function(){
-    var stackObj = this._sceneStack.pop();
-    stackObj.scene.destroy();
+    var prevStackObj = this._getPrevStack();
+    if (prevStackObj) {
+      prevStackObj.scene.onResumeAfter();
+    }
+
+    var currentStackObj = this._getCurrentStack();
+    if (currentStackObj) {
+      currentStackObj.scene.onPauseAfter();
+      currentStackObj.scene.onDestroy();
+
+      var stackObj = this._sceneStack.pop();
+      stackObj.scene.destroy();
+    }
   }
 });

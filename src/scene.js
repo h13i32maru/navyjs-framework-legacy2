@@ -4,7 +4,10 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   _pageStack: null,
 
   initialize: function($super, layout, callback){
-    $super(layout);
+    var notify = new Navy.Notify(4, callback.bind(null, this));
+    var pass = notify.pass.bind(notify);
+
+    $super(layout, pass);
 
     var bottomLayout = {
       class: 'Navy.Page',
@@ -16,7 +19,7 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
       }
     };
 
-    var bottomPage = new Navy.Page(bottomLayout);
+    var bottomPage = new Navy.Page(bottomLayout, pass);
     this.addView(bottomPage);
 
     var topLayout = {
@@ -29,7 +32,7 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
       }
     };
 
-    var topPage = new Navy.Page(topLayout);
+    var topPage = new Navy.Page(topLayout, pass);
     this.addView(topPage);
 
     this._pageStack = [];
@@ -37,13 +40,13 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
 
     Navy.Screen.createPage(pageName, function(page){
       this.addPage(page);
-      callback && callback(this);
+      pass();
     }.bind(this));
 
     //FIXME: remove debug code
     var cb = function(){
       if (this._pageStack.length < 5) {
-        this.goToPage('Page' + (Date.now() % 2 + 1));
+        this.nextPage('Page' + (Date.now() % 2 + 1));
       } else {
         this._element.removeEventListener('touchend', cb);
         this._element.addEventListener('touchend', function cb(){
@@ -52,6 +55,30 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
       }
     }.bind(this);
     this._element.addEventListener('touchend', cb);
+  },
+
+  onCreate: function() {
+    console.log('onCreate');
+  },
+
+  onResumeBefore: function(){
+    console.log('onResumeBefore');
+  },
+
+  onResumeAfter: function(){
+    console.log('onResumeAfter');
+  },
+
+  onPauseBefore: function(){
+    console.log('onPauseBefore');
+  },
+
+  onPauseAfter: function(){
+    console.log('onPauseAfter');
+  },
+
+  onDestroy: function(){
+    console.log('onDestroy');
   },
 
   addPage: function(page) {
