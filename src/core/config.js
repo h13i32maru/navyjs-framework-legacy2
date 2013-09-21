@@ -29,7 +29,15 @@ Navy.Config = Navy.Class.instance({
     xhr.open('GET', 'config/scene.json');
     xhr.onload = function(ev){
       var xhr = ev.target;
-      this.scene = JSON.parse(xhr.responseText);
+
+      // 配列をハッシュに変換してアクセスしやすくする.
+      var sceneList = JSON.parse(xhr.responseText);
+      var scene = {};
+      for (var i = 0; i < sceneList.length; i++) {
+        scene[sceneList[i].id] = sceneList[i];
+      }
+      this.scene = scene;
+
       callback();
     }.bind(this);
     xhr.send();
@@ -40,7 +48,15 @@ Navy.Config = Navy.Class.instance({
     xhr.open('GET', 'config/page.json');
     xhr.onload = function(ev){
       var xhr = ev.target;
-      this.page = JSON.parse(xhr.responseText);
+
+      // 配列をハッシュに変換してアクセスしやすくする.
+      var pageList = JSON.parse(xhr.responseText);
+      var page = {};
+      for (var i = 0; i < pageList.length; i++) {
+        page[pageList[i].id] = pageList[i];
+      }
+      this.page = page;
+
       callback();
     }.bind(this);
     xhr.send();

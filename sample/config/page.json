@@ -1,6 +1,6 @@
-{
-  "Page1": {
-    "id": "page1",
+[
+  {
+    "id": "Page1",
     "class": "Page1",
     "classFile": "class/page1.js",
     "pos": {"x": 0, "y": 0},
@@ -10,8 +10,8 @@
       "contentLayoutFile": "layout/page1.json"
     }
   },
-  "Page2": {
-    "id": "page2",
+  {
+    "id": "Page2",
     "class": "Page2",
     "classFile": "class/page2.js",
     "pos": {"x": 0, "y": 0},
@@ -21,4 +21,4 @@
       "contentLayoutFile": "layout/page2.json"
     }
   }
-}
+]
