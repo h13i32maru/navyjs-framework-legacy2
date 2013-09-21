@@ -2,7 +2,7 @@
   {
     "id": "Page1",
     "class": "Page1",
-    "classFile": "class/page1.js",
+    "classFile": "code/page1.js",
     "pos": {"x": 0, "y": 0},
     "size": {"width": 640, "height": 960},
     "backgroundColor": "#ff0000",
@@ -13,7 +13,7 @@
   {
     "id": "Page2",
     "class": "Page2",
-    "classFile": "class/page2.js",
+    "classFile": "code/page2.js",
     "pos": {"x": 0, "y": 0},
     "size": {"width": 640, "height": 960},
     "backgroundColor": "#00ff00",
