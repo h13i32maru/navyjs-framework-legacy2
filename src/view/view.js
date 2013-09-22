@@ -112,6 +112,10 @@ Navy.View.View = Navy.Class({
     this.setPos({x: x, y: y});
   },
 
+  getPos: function() {
+    return {x: this._layout.pos.x, y: this._layout.pos.y, z: this._layout.pos.z};
+  },
+
   destroy: function() {
     this._parentView.removeView(this);
     this._element = null;
