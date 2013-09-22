@@ -85,6 +85,22 @@ Navy.View.View = Navy.Class({
     this._element.style.display = 'none';
   },
 
+  setSize: function(size) {
+    var cssText = '';
+
+    if (typeof size.width === 'number') {
+      this._layout.size.width = size.width;
+      cssText += 'width:' + size.width + 'px;';
+    }
+
+    if (typeof size.height === 'number') {
+      this._layout.size.height = size.height;
+      cssText += 'height:' + size.height + 'px;';
+    }
+
+    this._element.style.cssText += cssText;
+  },
+
   setPos: function(pos) {
     var cssText = '';
 

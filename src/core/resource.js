@@ -48,14 +48,16 @@ Navy.Resource = Navy.Class.instance({
 
   loadImage: function(imageFile, callback) {
     if (this._images[imageFile]) {
-      callback && setTimeout(callback.bind(null, imageFile), 0);
+      var width = this._images[imageFile].width;
+      var height = this._images[imageFile].height;
+      callback && setTimeout(callback.bind(null, imageFile, width, height), 0);
       return;
     }
 
     var image = new Image();
     image.onload = function(){
-      this._images[imageFile] = true;
-      callback(imageFile);
+      this._images[imageFile] = {width: image.width, height: image.height};
+      callback(imageFile, image.width, image.height);
     }.bind(this);
     image.src = imageFile;
   },
