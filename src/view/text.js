@@ -8,7 +8,15 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
    * @param {function} callback
    */
   initialize: function($super, layout, callback) {
+    $super(layout, callback);
+  },
+
+  setLayout: function($super, layout, callback) {
     $super(layout);
+
+    if (!layout) {
+      return;
+    }
 
     this._element.textContent = layout.extra.text;
 

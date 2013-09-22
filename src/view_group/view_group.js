@@ -10,9 +10,13 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
    * @param callback
    */
   initialize: function($super, layout, callback) {
-    $super(layout);
-
     this._views = {};
+
+    $super(layout, callback);
+  },
+
+  setLayout: function($super, layout, callback) {
+    $super(layout);
 
     if (layout && layout.extra.contentLayoutFile) {
       callback = callback || function(){};

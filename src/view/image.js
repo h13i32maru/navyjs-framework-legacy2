@@ -4,11 +4,17 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
   _imgElm: null,
 
   initialize: function($super, layout, callback) {
+    $super(layout, callback);
+  },
+
+  setLayout: function($super, layout, callback) {
     $super(layout);
 
-    var imgElm = document.createElement('img');
-    this._element.appendChild(imgElm);
-    this._imgElm = imgElm;
+    if (!this._imgElm) {
+      var imgElm = document.createElement('img');
+      this._element.appendChild(imgElm);
+      this._imgElm = imgElm;
+    }
 
     Navy.Resource.loadImage(layout.extra.src, function(src){
       this._onLoadImage(src);

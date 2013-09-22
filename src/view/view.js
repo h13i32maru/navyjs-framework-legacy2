@@ -14,18 +14,24 @@ Navy.View.View = Navy.Class({
     this._layout = layout;
     this._element = document.createElement('div');
 
-    if (layout) {
-      var style = {
-        position: 'absolute',
-        left: layout.pos.x + 'px',
-        top: layout.pos.y + 'px',
-        zIndex: layout.pos.z,
-        width: layout.size.width + 'px',
-        height: layout.size.height + 'px',
-        backgroundColor: layout.backgroundColor
-      };
-      this.setRawStyle(style);
+    this.setLayout(layout, callback);
+  },
+
+  setLayout: function(layout, callback) {
+    if (!layout) {
+      return;
     }
+
+    var style = {
+      position: 'absolute',
+      left: layout.pos.x + 'px',
+      top: layout.pos.y + 'px',
+      zIndex: layout.pos.z,
+      width: layout.size.width + 'px',
+      height: layout.size.height + 'px',
+      backgroundColor: layout.backgroundColor
+    };
+    this.setRawStyle(style);
 
     callback && setTimeout(callback.bind(null, this), 0);
   },

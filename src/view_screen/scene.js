@@ -6,10 +6,12 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   initialize: function($super, layout, callback){
     this._pageStack = [];
 
+    /*
     var notify = new Navy.Notify(3, function(){
       this.nextPage(layout.extra.page, callback.bind(null, this));
     }.bind(this));
     var pass = notify.pass.bind(notify);
+    */
 
     $super(layout, function(){
       var views = this._views;
