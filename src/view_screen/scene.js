@@ -6,13 +6,6 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   initialize: function($super, layout, callback){
     this._pageStack = [];
 
-    /*
-    var notify = new Navy.Notify(3, function(){
-      this.nextPage(layout.extra.page, callback.bind(null, this));
-    }.bind(this));
-    var pass = notify.pass.bind(notify);
-    */
-
     // シーン、ページの場合はsize, posは固定値でよい
     layout.pos = {x:0, y:0};
     layout.size = {width: Navy.Config.app.size.width, height: Navy.Config.app.size.height};
