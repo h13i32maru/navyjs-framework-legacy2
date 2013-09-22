@@ -23,6 +23,7 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
   },
 
   _onLoadImage: function(src){
+    this._layout.extra.src = src;
     this._imgElm.src = src;
   }
 });

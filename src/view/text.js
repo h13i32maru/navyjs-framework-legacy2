@@ -1,6 +1,8 @@
 Navy.View.Text = Navy.Class(Navy.View.View, {
   CLASSNAME: 'Navy.View.Text',
 
+  _textElement: null,
+
   /**
    *
    * @param $super
@@ -18,8 +20,15 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
       return;
     }
 
+    if (!this._textElement) {
+      this._textElement = document.createElement('span');
+      this._element.appendChild(this._textElement);
+    }
+
+
     if (layout.extra) {
-      this._element.textContent = layout.extra.text;
+      this._layout.extra.text = layout.extra.text;
+      this._textElement.textContent = layout.extra.text;
     }
 
     callback && setTimeout(callback.bind(null, this), 0);
