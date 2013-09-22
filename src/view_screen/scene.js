@@ -13,6 +13,10 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     var pass = notify.pass.bind(notify);
     */
 
+    // シーン、ページの場合はsize, posは固定値でよい
+    layout.pos = {x:0, y:0};
+    layout.size = {width: Navy.Config.app.size.width, height: Navy.Config.app.size.height};
+
     $super(layout, function(){
       var views = this._views;
       for (var name in views) {
