@@ -25,6 +25,15 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     this.nextScene(startSceneName);
   },
 
+  // fixme: callbackを実装する.
+  linkScene: function(id) {
+    if (id === '$back') {
+      this.backScene();
+    } else {
+      this.nextScene(id);
+    }
+  },
+
   nextScene: function(sceneName) {
     this._createScene(sceneName, this._addScene.bind(this));
   },

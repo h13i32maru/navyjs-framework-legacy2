@@ -55,13 +55,12 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     return this;
   },
 
-  linkPage: function(id, callback) {
+  // fixme: callbackを実装する.
+  linkPage: function(id) {
     if (id === '$back') {
       this.backPage();
-      // fixme: backPageにcallback実装する
-      callback && setTimeout(callback, 0);
     } else {
-      this.nextPage(id, callback);
+      this.nextPage(id);
     }
   },
 

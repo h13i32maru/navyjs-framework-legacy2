@@ -25,5 +25,33 @@
     "extra": {
       "contentLayoutFile": "layout/group1.json"
     }
+  },
+
+  {
+    "id": "group1_3",
+    "class": "Navy.ViewGroup.ViewGroup",
+    "pos": {"x": 0, "y": 356},
+    "sizePolicy": "wrapContent",
+    "link": {
+      "type": "scene",
+      "id": "Scene1"
+    },
+    "extra": {
+      "contentLayoutFile": "layout/group1.json"
+    }
+  },
+
+  {
+    "id": "group1_4",
+    "class": "Navy.ViewGroup.ViewGroup",
+    "pos": {"x": 0, "y": 484},
+    "sizePolicy": "wrapContent",
+    "link": {
+      "type": "scene",
+      "id": "$back"
+    },
+    "extra": {
+      "contentLayoutFile": "layout/group1.json"
+    }
   }
 ]

@@ -85,7 +85,7 @@ Navy.View.View = Navy.Class({
       this.getScene().linkPage(id);
       break;
     case 'scene':
-      console.log('scene', id);
+      Navy.Root.linkScene(id);
       break;
     }
   },
