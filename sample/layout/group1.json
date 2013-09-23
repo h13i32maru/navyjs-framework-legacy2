@@ -15,7 +15,8 @@
     "sizePolicy": "wrapContent",
     "pos": {"x": 128, "y": 0},
     "extra": {
-      "text": "page1"
+      "text": "page1",
+      "fontSize": 10
     }
   }
 ]
