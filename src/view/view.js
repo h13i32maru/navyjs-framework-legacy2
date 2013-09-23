@@ -29,6 +29,8 @@ Navy.View.View = Navy.Class({
       return;
     }
 
+    this._layout = layout;
+
     var style = {
       position: 'absolute',
       left: layout.pos.x + 'px',
