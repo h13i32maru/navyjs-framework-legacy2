@@ -8,6 +8,7 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
 
     // シーン、ページの場合はsize, posは固定値でよい
     layout.pos = {x:0, y:0};
+    layout.sizePolicy = this.SIZE_POLICY_FIXED;
     layout.size = {width: Navy.Config.app.size.width, height: Navy.Config.app.size.height};
 
     $super(layout, function(){

@@ -3,6 +3,7 @@
     "id": "text",
     "class": "Navy.View.Text",
     "pos": {"x": 10, "y": 200},
+    "sizePolicy": "fixed",
     "size": {"width": 80, "height": 80},
     "extra": {
       "text": "page2"

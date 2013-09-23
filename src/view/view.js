@@ -1,6 +1,9 @@
 Navy.View.View = Navy.Class({
   CLASSNAME: 'Navy.View.View',
 
+  SIZE_POLICY_FIXED: 'fixed',
+  SIZE_POLICY_WRAP_CONTENT: 'wrapContent',
+
   _layout: null,
   _element: null,
   _parentView: null,
@@ -27,10 +30,16 @@ Navy.View.View = Navy.Class({
       left: layout.pos.x + 'px',
       top: layout.pos.y + 'px',
       zIndex: layout.pos.z,
-      width: layout.size.width + 'px',
-      height: layout.size.height + 'px',
       backgroundColor: layout.backgroundColor
     };
+
+    if (layout.sizePolicy == this.SIZE_POLICY_FIXED) {
+      style.width = layout.size.width + 'px';
+      style.height = layout.size.height + 'px';
+    } else {
+      layout.size = {};
+    }
+
     this.setRawStyle(style);
 
     callback && setTimeout(callback.bind(null, this), 0);
@@ -83,6 +92,23 @@ Navy.View.View = Navy.Class({
 
   hide: function() {
     this._element.style.display = 'none';
+  },
+
+  getSize: function() {
+    switch (this._layout.sizePolicy) {
+    case this.SIZE_POLICY_WRAP_CONTENT:
+      return {
+        width: this._element.scrollWidth,
+        height: this._element.scrollHeight
+      };
+    case this.SIZE_POLICY_FIXED:
+      return {
+        width: this._layout.size.width,
+        height: this._layout.size.height
+      };
+    default:
+      throw new Error('unknown size policy. ' + this._layout.sizePolicy);
+    }
   },
 
   setSize: function(size) {

@@ -2,7 +2,6 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
   CLASSNAME: 'Navy.View.Image',
 
   _imgElm: null,
-  _autoSize: false,
 
   initialize: function($super, layout, callback) {
     $super(layout, callback);
@@ -15,12 +14,6 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
       var imgElm = document.createElement('img');
       this._element.appendChild(imgElm);
       this._imgElm = imgElm;
-    }
-
-    if (layout) {
-      if (layout.size.width === null || layout.size.height === null) {
-        this._autoSize = true;
-      }
     }
 
     if (layout && layout.extra.src) {
@@ -39,7 +32,7 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
     this._layout.extra.src = src;
     this._imgElm.src = src;
 
-    if (this._autoSize) {
+    if (this._layout.sizePolicy == this.SIZE_POLICY_WRAP_CONTENT) {
       this.setSize({width: width, height: height});
     }
   }
