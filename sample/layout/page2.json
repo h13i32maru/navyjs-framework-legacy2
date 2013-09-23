@@ -1,12 +1,30 @@
 [
   {
-    "id": "text",
+    "id": "text1",
     "class": "Navy.View.Text",
     "pos": {"x": 10, "y": 200},
     "sizePolicy": "fixed",
     "size": {"width": 80, "height": 80},
+    "link": {
+      "type": "page",
+      "id": "Page1"
+    },
     "extra": {
-      "text": "page2"
+      "text": "go Page1"
+    }
+  },
+  {
+    "id": "text2",
+    "class": "Navy.View.Text",
+    "pos": {"x": 10, "y": 300},
+    "sizePolicy": "fixed",
+    "size": {"width": 80, "height": 80},
+    "link": {
+      "type": "page",
+      "id": "$back"
+    },
+    "extra": {
+      "text": "back"
     }
   }
 ]

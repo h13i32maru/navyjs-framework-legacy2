@@ -18,25 +18,51 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
       }
       this.nextPage(layout.extra.page, callback.bind(null, this));
 
-      //FIXME: remove debug code
-      views[name].addRawEventListener('touchend', function(ev){
-        ev.stopPropagation();
-        Navy.Root.nextScene('Scene1');
-      });
+//      //FIXME: remove debug code
+//      views[name].addRawEventListener('touchend', function(ev){
+//        ev.stopPropagation();
+//        Navy.Root.nextScene('Scene1');
+//      });
     }.bind(this));
 
     //FIXME: remove debug code
-    var cb = function(){
-      if (this._pageStack.length < 5) {
-        this.nextPage('Page' + (Date.now() % 2 + 1));
-      } else {
-        this._element.removeEventListener('touchend', cb);
-        this._element.addEventListener('touchend', function cb(){
-          this.backPage();
-        }.bind(this));
-      }
-    }.bind(this);
-    this._element.addEventListener('touchend', cb);
+//    var cb = function(){
+//      if (this._pageStack.length < 5) {
+//        this.nextPage('Page' + (Date.now() % 2 + 1));
+//      } else {
+//        this._element.removeEventListener('touchend', cb);
+//        this._element.addEventListener('touchend', function cb(){
+//          this.backPage();
+//        }.bind(this));
+//      }
+//    }.bind(this);
+//    this._element.addEventListener('touchend', cb);
+  },
+
+  setPage: function(page) {
+    // ignore
+  },
+
+  getPage: function() {
+    return null;
+  },
+
+  setScene: function(scene) {
+    // ignore
+  },
+
+  getScene: function() {
+    return this;
+  },
+
+  linkPage: function(id, callback) {
+    if (id === '$back') {
+      this.backPage();
+      // fixme: backPageにcallback実装する
+      callback && setTimeout(callback, 0);
+    } else {
+      this.nextPage(id, callback);
+    }
   },
 
   nextPage: function(pageName, callback) {
@@ -78,6 +104,7 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     console.log('onDestroy', this.CLASSNAME);
   },
 
+  // 不要？
   _getBottomPageLayout: function(layout) {
     var bottomLayout = {
       class: 'Navy.Page',
@@ -92,6 +119,7 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     return bottomLayout;
   },
 
+  // 不要？
   _getTopPageLayout: function(layout) {
     var topLayout = {
       class: 'Navy.Page',

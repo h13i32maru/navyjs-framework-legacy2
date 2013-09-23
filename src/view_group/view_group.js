@@ -54,11 +54,33 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     return null;
   },
 
+  setPage: function($super, page) {
+    $super(page);
+
+    var views = this._views;
+    for  (var viewId in views) {
+      var view = views[viewId];
+      view.setPage(page);
+    }
+  },
+
+  setScene: function($super, scene) {
+    $super(scene);
+
+    var views = this._views;
+    for  (var viewId in views) {
+      var view = views[viewId];
+      view.setScene(scene);
+    }
+  },
+
   addView: function(view) {
     var element = view.getElement();
     this._element.appendChild(element);
     this._views[view.getId()] = view;
     view.setParent(this);
+    view.setPage(this.getPage());
+    view.setScene(this.getScene());
   },
 
   removeView: function(view) {

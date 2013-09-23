@@ -10,6 +10,14 @@ Navy.Page = Navy.Class(Navy.ViewGroup.ViewGroup, {
     $super(layout, callback);
   },
 
+  setPage: function($super, page) {
+    // ignore
+  },
+
+  getPage: function() {
+    return this;
+  },
+
   onCreate: function() {
     console.log('onCreate', this.CLASSNAME);
   },

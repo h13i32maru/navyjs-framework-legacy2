@@ -4,6 +4,8 @@ Navy.View.View = Navy.Class({
   SIZE_POLICY_FIXED: 'fixed',
   SIZE_POLICY_WRAP_CONTENT: 'wrapContent',
 
+  _page: null,
+  _scene: null,
   _layout: null,
   _element: null,
   _parentView: null,
@@ -16,6 +18,8 @@ Navy.View.View = Navy.Class({
   initialize: function(layout, callback) {
     this._layout = layout;
     this._element = document.createElement('div');
+
+    this._execLink = this._execLink.bind(this);
 
     this.setLayout(layout, callback);
   },
@@ -38,6 +42,12 @@ Navy.View.View = Navy.Class({
       style.height = layout.size.height + 'px';
     } else {
       layout.size = {};
+    }
+
+    if (layout.link) {
+      // fixme: とりあえずtouchendで代用してるが、tochstartとかもちゃんと使ってタップ判定すべき.
+      this._element.removeEventListener('touchend', this._execLink);
+      this._element.addEventListener('touchend', this._execLink);
     }
 
     this.setRawStyle(style);
@@ -66,6 +76,20 @@ Navy.View.View = Navy.Class({
     this._element.style.cssText += cssText;
   },
 
+  _execLink: function(ev) {
+    var type = this._layout.link.type;
+    var id = this._layout.link.id;
+
+    switch (type) {
+    case 'page':
+      this.getScene().linkPage(id);
+      break;
+    case 'scene':
+      console.log('scene', id);
+      break;
+    }
+  },
+
   addRawEventListener: function(eventName, callback) {
     this._element.addEventListener(eventName, callback);
   },
@@ -76,6 +100,22 @@ Navy.View.View = Navy.Class({
 
   getId: function(){
     return this._layout.id;
+  },
+
+  setPage: function(page) {
+    this._page = page;
+  },
+
+  getPage: function() {
+    return this._page;
+  },
+
+  setScene: function(scene) {
+    this._scene = scene;
+  },
+
+  getScene: function() {
+    return this._scene;
   },
 
   getElement: function(){
