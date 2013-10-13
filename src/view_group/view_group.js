@@ -74,6 +74,14 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     }
   },
 
+  getAllViews: function() {
+    var result = {};
+    for (var viewId in this._views) {
+      result[viewId] = this._views[viewId];
+    }
+    return result;
+  },
+
   addView: function(view) {
     var element = view.getElement();
     this._element.appendChild(element);
@@ -89,5 +97,17 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     this._views[view.getId()] = null;
     delete this._views[view.getId()];
     view.setParent(null);
+  },
+
+  removeAllViews: function() {
+    var views = this._views;
+    var viewIds = Object.keys(views);
+
+    // removeViewを行うとviewsの要素数が変わるのでid配列に対してのループにしている
+    for (var i = 0; i < viewIds.length; i++) {
+      var viewId = viewIds[i];
+      var view = views[viewId];
+      this.removeView(view);
+    }
   }
 });

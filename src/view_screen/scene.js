@@ -6,11 +6,6 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
   initialize: function($super, layout, callback){
     this._pageStack = [];
 
-    // シーン、ページの場合はsize, posは固定値でよい
-    layout.pos = {x:0, y:0};
-    layout.sizePolicy = this.SIZE_POLICY_FIXED;
-    layout.size = {width: Navy.Config.app.size.width, height: Navy.Config.app.size.height};
-
     $super(layout, function(){
       var views = this._views;
       for (var name in views) {
@@ -37,6 +32,15 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
 //      }
 //    }.bind(this);
 //    this._element.addEventListener('touchend', cb);
+  },
+
+  setLayout: function($super, layout, callback) {
+    // シーン、ページの場合はsize, posは固定値でよい
+    layout.pos = {x:0, y:0};
+    layout.sizePolicy = this.SIZE_POLICY_FIXED;
+    layout.size = {width: Navy.Config.app.size.width, height: Navy.Config.app.size.height};
+
+    $super(layout, callback);
   },
 
   setPage: function(page) {

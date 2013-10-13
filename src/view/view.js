@@ -136,6 +136,14 @@ Navy.View.View = Navy.Class({
     this._element.style.display = 'none';
   },
 
+  setBackgroundColor: function(backgroundColor) {
+    this._layout.backgroundColor = backgroundColor;
+
+    this.setRawStyle({backgroundColor: backgroundColor});
+  },
+
+  //FIXME: getBackgroundColorつくる
+
   getSize: function() {
     switch (this._layout.sizePolicy) {
     case this.SIZE_POLICY_WRAP_CONTENT:
