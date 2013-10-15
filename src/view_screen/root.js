@@ -70,15 +70,10 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     document.body.style.width = width + 'px';
     document.body.style.height = height + 'px';
 
-    // window.NativeはNavyCreatorの場合にのみ存在するオブジェクト
-    // NavyCreatorではzoomを行った場合、left,topにも影響するので補正しておく必要がある
-    if (window.Native) {
-      document.body.style.left = (left / scale) + 'px';
-      document.body.style.top = (top / scale) + 'px';
-    } else {
-      document.body.style.left = left + 'px';
-      document.body.style.top = top + 'px';
-    }
+    // zoomがleft,topにも影響するので補正しておく必要がある
+    // FIXME: Google Chrome, Android Browser, Android Chrome, Mobile Safariでどうなっているか最新のバージョンで確かめる必要あり.
+    document.body.style.left = (left / scale) + 'px';
+    document.body.style.top = (top / scale) + 'px';
   },
 
   _createScene: function(sceneName, callback) {
