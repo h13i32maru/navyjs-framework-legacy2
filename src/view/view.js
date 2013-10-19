@@ -196,7 +196,9 @@ Navy.View.View = Navy.Class({
     this._setRawStyle({backgroundColor: backgroundColor});
   },
 
-  //FIXME: getBackgroundColorつくる
+  getBackgroundColor: function() {
+    return this._layout.backgroundColor;
+  },
 
   getSize: function() {
     switch (this._layout.sizePolicy) {
