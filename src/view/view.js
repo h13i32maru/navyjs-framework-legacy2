@@ -157,7 +157,11 @@ Navy.View.View = Navy.Class({
 
   destroy: function() {
     this._parentView.removeView(this);
-    this._element = null;
+
+    var names = Object.getOwnPropertyNames(this);
+    for (var i = 0; i < names.length; i++) {
+      this[names[i]] = null;
+    }
   },
 
   toJSON: function() {
