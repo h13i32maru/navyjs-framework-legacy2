@@ -7,24 +7,28 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
     $super(layout, callback);
   },
 
-  setLayout: function($super, layout, callback) {
+  _createElement: function($super, layout) {
     $super(layout);
 
-    if (!this._imgElm) {
-      var imgElm = document.createElement('img');
-      this._element.appendChild(imgElm);
-      this._imgElm = imgElm;
-    }
+    var imgElm = document.createElement('img');
+    this._element.appendChild(imgElm);
+    this._imgElm = imgElm;
+  },
 
+  _convertLayoutToExtraStyle: function($super, layout) {
+    return $super(layout);
+  },
+
+  _loadExtraResource: function($super, layout, callback) {
     if (layout && layout.extra.src) {
       Navy.Resource.loadImage(layout.extra.src, function(src, width, height){
         this._onLoadImage(src, width, height);
-        callback && callback(this);
+        $super(layout, callback);
       }.bind(this));
     } else {
       this._layout.extra.src = null;
       this._imgElm.src = '';
-      callback && setTimeout(callback, 0);
+      $super(layout, callback);
     }
   },
 

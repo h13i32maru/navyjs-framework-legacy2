@@ -13,30 +13,34 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
     $super(layout, callback);
   },
 
-  setLayout: function($super, layout, callback) {
+  _createElement: function($super, layout) {
     $super(layout);
 
-    if (!layout) {
-      return;
+    this._textElement = document.createElement('span');
+    this._element.appendChild(this._textElement);
+  },
+
+  _convertLayoutToExtraStyle: function($super, layout) {
+    var style = $super(layout);
+
+    if (!layout.extra) {
+      return style;
     }
 
-    if (!this._textElement) {
-      this._textElement = document.createElement('span');
-      this._element.appendChild(this._textElement);
-    }
-
-    if (layout.extra) {
-      this._textElement.textContent = layout.extra.text;
-
-      if (typeof layout.extra.fontSize === "number") {
-        this._textElement.style.fontSize = layout.extra.fontSize + 'px';
-      }
+    if (typeof layout.extra.fontSize === "number") {
+      style.fontSize = layout.extra.fontSize + 'px';
     }
 
     if (layout.sizePolicy == this.SIZE_POLICY_WRAP_CONTENT) {
-      this._element.style.display = 'inline';
+      style.display = 'inline';
     }
 
-    callback && setTimeout(callback.bind(null, this), 0);
+    return style;
+  },
+
+  _loadExtraResource: function($super, layout, callback) {
+    this._textElement.textContent = layout.extra.text;
+
+    $super(layout, callback);
   }
 });

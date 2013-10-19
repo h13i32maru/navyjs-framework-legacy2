@@ -15,18 +15,17 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     $super(layout, callback);
   },
 
-  setLayout: function($super, layout, callback) {
-    $super(layout);
-
+  _loadExtraResource: function($super, layout, callback) {
     if (layout && layout.extra.contentLayoutFile) {
       this._layout.extra.contentLayoutFile = layout.extra.contentLayoutFile;
-      callback = callback || function(){};
-      this._initCallback = callback.bind(null, this);
+      this._initCallback = function() {
+        $super(layout, callback);
+      };
       Navy.Resource.loadLayout(layout.extra.contentLayoutFile, this._onLoadContentLayout.bind(this));
     } else {
       // rootは_layoutがnull
       this._layout && (this._layout.extra.contentLayoutFile = null);
-      callback && setTimeout(callback.bind(null, this), 0);
+      $super(layout, callback);
     }
   },
 

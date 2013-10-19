@@ -17,7 +17,8 @@ Navy.View.View = Navy.Class({
    */
   initialize: function(layout, callback) {
     this._layout = layout;
-    this._element = document.createElement('div');
+
+    this._createElement(layout);
 
     this._execLink = this._execLink.bind(this);
 
@@ -31,6 +32,26 @@ Navy.View.View = Navy.Class({
 
     this._layout = layout;
 
+    var notify = new Navy.Notify(2, function(){
+      this.setRawStyle(style);
+      this.setRawStyle(extraStyle);
+      callback && callback(this);
+    }.bind(this));
+
+    var pass = notify.pass.bind(notify);
+
+    var style = this._convertLayoutToStyle(layout);
+    this._loadResource(layout, pass);
+
+    var extraStyle = this._convertLayoutToExtraStyle(layout);
+    this._loadExtraResource(layout, pass);
+  },
+
+  _createElement: function(layout) {
+    this._element = document.createElement('div');
+  },
+
+  _convertLayoutToStyle: function(layout) {
     var style = {
       position: 'absolute',
       left: layout.pos.x + 'px',
@@ -52,9 +73,19 @@ Navy.View.View = Navy.Class({
       this._element.addEventListener('touchend', this._execLink);
     }
 
-    this.setRawStyle(style);
+    return style;
+  },
 
-    callback && setTimeout(callback.bind(null, this), 0);
+  _loadResource: function(layout, callback) {
+    callback && setTimeout(callback, 0);
+  },
+
+  _convertLayoutToExtraStyle: function(layout) {
+    return {};
+  },
+
+  _loadExtraResource: function(layout, callback) {
+    callback && setTimeout(callback, 0);
   },
 
   setRawStyle: function(style) {
