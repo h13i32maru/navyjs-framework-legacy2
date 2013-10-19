@@ -2,6 +2,7 @@
   {
     "id": "group1_1",
     "class": "Navy.ViewGroup.ViewGroup",
+    "visible": true,
     "pos": {"x": 0, "y": 100},
     "sizePolicy": "wrapContent",
     "link": {
@@ -16,6 +17,7 @@
   {
     "id": "group1_2",
     "class": "Navy.ViewGroup.ViewGroup",
+    "visible": true,
     "pos": {"x": 0, "y": 228},
     "sizePolicy": "wrapContent",
     "link": {
@@ -30,6 +32,7 @@
   {
     "id": "group1_3",
     "class": "Navy.ViewGroup.ViewGroup",
+    "visible": true,
     "pos": {"x": 0, "y": 356},
     "sizePolicy": "wrapContent",
     "link": {
@@ -44,6 +47,7 @@
   {
     "id": "group1_4",
     "class": "Navy.ViewGroup.ViewGroup",
+    "visible": true,
     "pos": {"x": 0, "y": 484},
     "sizePolicy": "wrapContent",
     "link": {

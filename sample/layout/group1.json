@@ -1,6 +1,7 @@
 [
   {
     "id": "image",
+    "visible": true,
     "class": "Navy.View.Image",
     "sizePolicy": "wrapContent",
     "pos": {"x": 0, "y": 0},
@@ -12,6 +13,7 @@
   {
     "id": "text",
     "class": "Navy.View.Text",
+    "visible": true,
     "sizePolicy": "wrapContent",
     "pos": {"x": 128, "y": 0},
     "extra": {

@@ -37,7 +37,7 @@ Navy.Transition.Fade = Navy.Class(Navy.Transition.Transition, {
     }
 
     var cb1 = function(){
-      this._beforeView.hide();
+      this._beforeView.setVisible(false);
       this._beforeView._setRawStyle({webkitAnimationName: ''});
       this._beforeView.removeRawEventListener('webkitAnimationEnd', cb1);
 
@@ -62,13 +62,13 @@ Navy.Transition.Fade = Navy.Class(Navy.Transition.Transition, {
     }
 
     var cb1 = function(){
-      this._afterView.hide();
+      this._afterView.setVisible(false);
       this._afterView.removeRawEventListener('webkitAnimationEnd', cb1);
       this._afterView._setRawStyle({webkitAnimationName: 'none'});
 
       this._beforeView.addRawEventListener('webkitAnimationEnd', cb2);
       this._beforeView._setRawStyle({opacity: 0, webkitAnimationName: 'fade_in'});
-      this._beforeView.show();
+      this._beforeView.setVisible(true);
     }.bind(this);
 
     var cb2 = function(){

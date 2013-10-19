@@ -57,6 +57,7 @@ Navy.View.View = Navy.Class({
   _applyLayout: function(layout) {
     this._element.style.position = 'absolute';
 
+    this.setVisible(layout.visible);
     this.setPos(layout.pos);
     this.setSizePolicy(layout.sizePolicy);
     this.setSize(layout.size);
@@ -177,7 +178,7 @@ Navy.View.View = Navy.Class({
    */
 
   isVisible: function() {
-    if (this._element.style.display === 'none') {
+    if (!this._layout.visible) {
       return false;
     }
 
@@ -190,12 +191,15 @@ Navy.View.View = Navy.Class({
     return true;
   },
 
-  show: function() {
-    this.setSizePolicy(this._layout.sizePolicy);
-  },
+  setVisible: function(visible) {
+    console.log(visible);
+    this._layout.visible = visible;
 
-  hide: function() {
-    this._element.style.display = 'none';
+    if (visible) {
+      this.setSizePolicy(this._layout.sizePolicy);
+    } else {
+      this._element.style.display = 'none';
+    }
   },
 
   setBackgroundColor: function(backgroundColor) {
@@ -208,6 +212,10 @@ Navy.View.View = Navy.Class({
   },
 
   setSizePolicy: function(sizePolicy) {
+    if (!this.isVisible()) {
+      return;
+    }
+
     switch(sizePolicy) {
     case this.SIZE_POLICY_FIXED:
       this._element.style.display = 'block';

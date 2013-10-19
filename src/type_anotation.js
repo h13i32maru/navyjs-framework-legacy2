@@ -6,7 +6,8 @@ document.head;
 /**
  * @typedef {{
  *  id: string,
- *  pos: {x: number, y:number},
+ *  visible: boolean,
+ *  pos: {x: number, y:number, z:number},
  *  sizePolicy: "fixed" | "wrapContent",
  *  size: {width: number, height: number},
  *  backgroundColor: string

@@ -38,7 +38,7 @@ Navy.Transition.SlideOver = Navy.Class(Navy.Transition.Transition, {
     }
 
     var cb = function(){
-      this._beforeView.hide();
+      this._beforeView.setVisible(false);
       this._afterView.removeRawEventListener('webkitAnimationEnd', cb);
       this._afterView._setRawStyle({webkitTransform: 'none', webkitAnimationName: 'none'});
       callback && callback();
@@ -59,7 +59,7 @@ Navy.Transition.SlideOver = Navy.Class(Navy.Transition.Transition, {
       callback && callback();
     }.bind(this);
 
-    this._beforeView.show();
+    this._beforeView.setVisible(true);
     this._afterView.addRawEventListener('webkitAnimationEnd', cb);
     this._afterView._setRawStyle({webkitAnimationName: 'slide_over_out'});
   }

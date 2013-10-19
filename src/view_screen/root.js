@@ -7,9 +7,10 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
    * @param $super
    */
   initialize: function($super) {
-    this._id = '$root';
-
     $super();
+
+    this._id = '$root';
+    this._layout = {visible: true};
 
     this._initDocument();
     var rootElm = document.createElement('div');
