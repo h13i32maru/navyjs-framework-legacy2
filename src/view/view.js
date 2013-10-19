@@ -4,6 +4,7 @@ Navy.View.View = Navy.Class({
   SIZE_POLICY_FIXED: 'fixed',
   SIZE_POLICY_WRAP_CONTENT: 'wrapContent',
 
+  _id: null,
   _page: null,
   _scene: null,
   _layout: null,
@@ -16,6 +17,10 @@ Navy.View.View = Navy.Class({
    * @param {ViewLayout} layout
    */
   initialize: function(layout, callback) {
+    if (layout) {
+      this._id = layout.id;
+    }
+
     this._layout = layout;
 
     this._createElement(layout);
@@ -132,7 +137,7 @@ Navy.View.View = Navy.Class({
   },
 
   getId: function(){
-    return this._layout.id;
+    return this._id;
   },
 
   setPage: function(page) {
@@ -157,6 +162,24 @@ Navy.View.View = Navy.Class({
 
   setParent: function(parentView) {
     this._parentView = parentView;
+  },
+
+  getParent: function() {
+    return this._parentView;
+  },
+
+  isVisible: function() {
+    if (this._element.style.display === 'none') {
+      return false;
+    }
+
+    for (var parent = this.getParent(); parent; parent = parent.getParent()) {
+      if (!parent.isVisible()) {
+        return false;
+      }
+    }
+
+    return true;
   },
 
   show: function() {

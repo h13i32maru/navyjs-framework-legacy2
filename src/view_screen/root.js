@@ -7,20 +7,17 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
    * @param $super
    */
   initialize: function($super) {
+    this._id = '$root';
+
     $super();
 
     this._initDocument();
-
-    var parentElm = document.body;
-
-    this._sceneStack = [];
-
     var rootElm = document.createElement('div');
     rootElm.style.cssText = 'position:absolute; width:100%; height:100%; overflow:hidden;';
-    parentElm.appendChild(rootElm);
-
+    document.body.appendChild(rootElm);
     this._element = rootElm;
 
+    this._sceneStack = [];
     var startSceneName = Navy.Config.app.start.scene;
     this.nextScene(startSceneName);
   },
