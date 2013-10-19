@@ -22,6 +22,16 @@ Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
     this.nextScene(startSceneName);
   },
 
+  getCurrentScene: function() {
+    var currentStackObj = this._getCurrentStack();
+    return currentStackObj.scene;
+  },
+
+  getCurrentPage: function() {
+    var scene = this.getCurrentScene();
+    return scene.getCurrentPage();
+  },
+
   // fixme: callbackを実装する.
   linkScene: function(id) {
     if (id === '$back') {

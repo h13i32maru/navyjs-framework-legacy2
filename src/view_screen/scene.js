@@ -40,6 +40,11 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
     return this;
   },
 
+  getCurrentPage: function() {
+    var currentStackObj = this._getCurrentStack();
+    return currentStackObj.page;
+  },
+
   // fixme: callbackを実装する.
   linkPage: function(id) {
     if (id === '$back') {
