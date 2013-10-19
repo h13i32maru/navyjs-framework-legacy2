@@ -18,7 +18,7 @@ Navy.Transition.SlideOver = Navy.Class(Navy.Transition.Transition, {
     }
 
     var width = Navy.Config.app.size.width;
-    afterView.setRawStyle({webkitAnimation: '0.5s', webkitTransform: 'translateX(' + width + 'px)'});
+    afterView._setRawStyle({webkitAnimation: '0.5s', webkitTransform: 'translateX(' + width + 'px)'});
   },
 
   _addAnimationStyle: function(){
@@ -32,7 +32,7 @@ Navy.Transition.SlideOver = Navy.Class(Navy.Transition.Transition, {
 
   start: function(callback) {
     if (!this._beforeView) {
-      this._afterView.setRawStyle({webkitTransform: 'none'});
+      this._afterView._setRawStyle({webkitTransform: 'none'});
       callback && callback();
       return;
     }
@@ -40,12 +40,12 @@ Navy.Transition.SlideOver = Navy.Class(Navy.Transition.Transition, {
     var cb = function(){
       this._beforeView.hide();
       this._afterView.removeRawEventListener('webkitAnimationEnd', cb);
-      this._afterView.setRawStyle({webkitTransform: 'none', webkitAnimationName: 'none'});
+      this._afterView._setRawStyle({webkitTransform: 'none', webkitAnimationName: 'none'});
       callback && callback();
     }.bind(this);
 
     this._afterView.addRawEventListener('webkitAnimationEnd', cb);
-    this._afterView.setRawStyle({webkitAnimationName: 'slide_over_in'});
+    this._afterView._setRawStyle({webkitAnimationName: 'slide_over_in'});
   },
 
   back: function(callback) {
@@ -61,6 +61,6 @@ Navy.Transition.SlideOver = Navy.Class(Navy.Transition.Transition, {
 
     this._beforeView.show();
     this._afterView.addRawEventListener('webkitAnimationEnd', cb);
-    this._afterView.setRawStyle({webkitAnimationName: 'slide_over_out'});
+    this._afterView._setRawStyle({webkitAnimationName: 'slide_over_out'});
   }
 });

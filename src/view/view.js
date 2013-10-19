@@ -33,8 +33,8 @@ Navy.View.View = Navy.Class({
     this._layout = layout;
 
     var notify = new Navy.Notify(2, function(){
-      this.setRawStyle(style);
-      this.setRawStyle(extraStyle);
+      this._setRawStyle(style);
+      this._setRawStyle(extraStyle);
       callback && callback(this);
     }.bind(this));
 
@@ -88,7 +88,7 @@ Navy.View.View = Navy.Class({
     callback && setTimeout(callback, 0);
   },
 
-  setRawStyle: function(style) {
+  _setRawStyle: function(style) {
     var cssText = '';
     for (var key in style) {
       var value = style[key];
@@ -170,7 +170,7 @@ Navy.View.View = Navy.Class({
   setBackgroundColor: function(backgroundColor) {
     this._layout.backgroundColor = backgroundColor;
 
-    this.setRawStyle({backgroundColor: backgroundColor});
+    this._setRawStyle({backgroundColor: backgroundColor});
   },
 
   //FIXME: getBackgroundColorつくる

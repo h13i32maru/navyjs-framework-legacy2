@@ -17,8 +17,8 @@ Navy.Transition.Fade = Navy.Class(Navy.Transition.Transition, {
       this.$static.initAnimationStyle = true;
     }
 
-    beforeView && beforeView.setRawStyle({webkitAnimation: '0.5s'});
-    afterView && afterView.setRawStyle({webkitAnimation: '0.5s', opacity: 0});
+    beforeView && beforeView._setRawStyle({webkitAnimation: '0.5s'});
+    afterView && afterView._setRawStyle({webkitAnimation: '0.5s', opacity: 0});
   },
 
   _addAnimationStyle: function(){
@@ -31,28 +31,28 @@ Navy.Transition.Fade = Navy.Class(Navy.Transition.Transition, {
 
   start: function(callback) {
     if (!this._beforeView) {
-      this._afterView.setRawStyle({opacity: ''});
+      this._afterView._setRawStyle({opacity: ''});
       callback && callback();
       return;
     }
 
     var cb1 = function(){
       this._beforeView.hide();
-      this._beforeView.setRawStyle({webkitAnimationName: ''});
+      this._beforeView._setRawStyle({webkitAnimationName: ''});
       this._beforeView.removeRawEventListener('webkitAnimationEnd', cb1);
 
       this._afterView.addRawEventListener('webkitAnimationEnd', cb2);
-      this._afterView.setRawStyle({opacity:0, webkitAnimationName: 'fade_in'});
+      this._afterView._setRawStyle({opacity:0, webkitAnimationName: 'fade_in'});
     }.bind(this);
 
     var cb2 = function(){
       this._afterView.removeRawEventListener('webkitAnimationEnd', cb2);
-      this._afterView.setRawStyle({opacity: '', webkitAnimationName: 'none'});
+      this._afterView._setRawStyle({opacity: '', webkitAnimationName: 'none'});
       callback && callback();
     }.bind(this);
 
     this._beforeView.addRawEventListener('webkitAnimationEnd', cb1);
-    this._beforeView.setRawStyle({webkitAnimationName: 'fade_out'});
+    this._beforeView._setRawStyle({webkitAnimationName: 'fade_out'});
   },
 
   back: function(callback) {
@@ -64,21 +64,21 @@ Navy.Transition.Fade = Navy.Class(Navy.Transition.Transition, {
     var cb1 = function(){
       this._afterView.hide();
       this._afterView.removeRawEventListener('webkitAnimationEnd', cb1);
-      this._afterView.setRawStyle({webkitAnimationName: 'none'});
+      this._afterView._setRawStyle({webkitAnimationName: 'none'});
 
       this._beforeView.addRawEventListener('webkitAnimationEnd', cb2);
-      this._beforeView.setRawStyle({opacity: 0, webkitAnimationName: 'fade_in'});
+      this._beforeView._setRawStyle({opacity: 0, webkitAnimationName: 'fade_in'});
       this._beforeView.show();
     }.bind(this);
 
     var cb2 = function(){
       this._beforeView.removeRawEventListener('webkitAnimationEnd', cb2);
-      this._beforeView.setRawStyle({opacity: '', webkitAnimationName: 'none'});
+      this._beforeView._setRawStyle({opacity: '', webkitAnimationName: 'none'});
       callback && callback();
     }.bind(this);
 
     this._afterView.addRawEventListener('webkitAnimationEnd', cb1);
-    this._afterView.setRawStyle({webkitAnimationName: 'fade_out'});
+    this._afterView._setRawStyle({webkitAnimationName: 'fade_out'});
   }
 });
 
