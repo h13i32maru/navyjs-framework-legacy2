@@ -1,4 +1,0 @@
-/**
- * @typedef {HTMLHeadElement}
- */
-document.head;
