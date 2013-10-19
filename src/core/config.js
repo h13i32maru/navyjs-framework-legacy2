@@ -1,6 +1,4 @@
-Navy.Config = Navy.Class.instance({
-  CLASSNAME: 'Navy.Config',
-
+Navy.Class.instance('Navy.Config', {
   app: null,
   scene: null,
   page: null,

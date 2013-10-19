@@ -1,6 +1,4 @@
-Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
-  CLASSNAME: 'Navy.Scene',
-
+Navy.Class('Navy.Scene', Navy.ViewGroup.ViewGroup, {
   _pageStack: null,
 
   initialize: function($super, layout, callback){

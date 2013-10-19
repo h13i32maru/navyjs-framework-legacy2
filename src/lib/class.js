@@ -1,30 +1,39 @@
-Navy.Class = function(){
+Navy.Class = function(var_args){
+  var className;
   var protoObj;
   var superClass;
+
   switch (arguments.length) {
-  case 1:
-    superClass = Navy.Class._RootClass;
-    protoObj = arguments[0];
-    break;
   case 2:
-    if (typeof arguments[0] === 'function') {
-      superClass = arguments[0];
-    } else {
-      superClass = arguments[0].constructor;
-    }
+    superClass = Navy.Class._RootClass;
+    className = arguments[0];
     protoObj = arguments[1];
     break;
+  case 3:
+    if (typeof arguments[1] === 'function') {
+      superClass = arguments[1];
+    } else {
+      superClass = arguments[1].constructor;
+    }
+    className = arguments[0];
+    protoObj = arguments[2];
+    break;
   default:
-    throw new Error('arguments of Navy.Class is 1 or 2.');
+    throw new Error('arguments of Navy.Class is 2 or 3.');
   }
 
-  return Navy.Class._create(superClass, protoObj);
+  var _class = Navy.Class._create(className, superClass, protoObj);
+  Navy.Class._setByReflection(className, _class);
+  return _class;
 };
 
 Navy.Class.instance = function instance(var_args) {
   var _class = Navy.Class.apply(Navy, arguments);
   _class.__manualInitialize__ = true;
   var obj = new _class();
+  var className = arguments[0];
+  Navy.Class._setByReflection(className, obj);
+
   return obj;
 };
 
@@ -34,10 +43,40 @@ Navy.Class.instance = function instance(var_args) {
 Navy.Class._RootClass = function _RootClass() {};
 Navy.Class._RootClass.prototype.initialize = function() {};
 
-Navy.Class._create = function _create(superClass, protoObj){
+Navy.Class._getByReflection = function _getByReflection(propertyName) {
+  var names = propertyName.split('.');
+
+  var obj = window;
+  for (var i = 0; i < names.length; i++) {
+    obj = obj[names[i]];
+  }
+
+  return obj;
+};
+
+Navy.Class._setByReflection = function _setByReflection(propertyName, value) {
+  var names = propertyName.split('.');
+
+  var obj = window;
+  for (var i = 0; i < names.length - 1; i++) {
+    if (!(names[i] in obj)) {
+      obj[names[i]] = {};
+    }
+
+    obj = obj[names[i]];
+  }
+
+  obj[names[i]] = value;
+};
+
+Navy.Class._create = function _create(className, superClass, protoObj){
+  /*
   var name = protoObj.CLASSNAME || 'Constructor';
   name = name.replace(/[.]/g, '$');
   var Constructor = new Function("return function " +  name + " () { if (typeof this.initialize === 'function' && !this.constructor.__manualInitialize__) { this.initialize.apply(this, arguments); } }")();
+  */
+  className = className.replace(/[.]/g, '$');
+  var Constructor = new Function("return function " +  className + " () { if (typeof this.initialize === 'function' && !this.constructor.__manualInitialize__) { this.initialize.apply(this, arguments); } }")();
 
   function EmptySuperClass(){}
   EmptySuperClass.prototype = superClass.prototype;

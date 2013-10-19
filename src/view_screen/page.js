@@ -1,6 +1,4 @@
-Navy.Page = Navy.Class(Navy.ViewGroup.ViewGroup, {
-  CLASSNAME: 'Navy.Page',
-
+Navy.Class('Navy.Page', Navy.ViewGroup.ViewGroup, {
   initialize: function($super, layout, callback) {
     $super(layout, callback);
   },

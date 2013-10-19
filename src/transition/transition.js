@@ -1,6 +1,4 @@
-Navy.Transition.Transition = Navy.Class({
-  CLASSNAME: 'Navy.Transition.Transition',
-
+Navy.Class('Navy.Transition.Transition', {
   initialize: function(beforeView, afterView){
   },
 

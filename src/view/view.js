@@ -1,6 +1,4 @@
-Navy.View.View = Navy.Class({
-  CLASSNAME: 'Navy.View.View',
-
+Navy.Class('Navy.View.View', {
   SIZE_POLICY_FIXED: 'fixed',
   SIZE_POLICY_WRAP_CONTENT: 'wrapContent',
 
@@ -192,7 +190,6 @@ Navy.View.View = Navy.Class({
   },
 
   setVisible: function(visible) {
-    console.log(visible);
     this._layout.visible = visible;
 
     if (visible) {

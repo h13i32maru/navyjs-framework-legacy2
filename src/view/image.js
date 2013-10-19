@@ -1,6 +1,4 @@
-Navy.View.Image = Navy.Class(Navy.View.View, {
-  CLASSNAME: 'Navy.View.Image',
-
+Navy.Class('Navy.View.Image', Navy.View.View, {
   _imgElm: null,
 
   initialize: function($super, layout, callback) {

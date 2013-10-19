@@ -1,8 +1,4 @@
-window.Navy = {
-  View: {},
-  ViewGroup: {},
-  Transition: {}
-};
+window.Navy = {};
 
 window.addEventListener('DOMContentLoaded', function(){
   Navy.App.initialize();

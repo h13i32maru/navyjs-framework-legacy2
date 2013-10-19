@@ -1,6 +1,4 @@
-Navy.App = Navy.Class.instance({
-  CLASSNAME: 'Navy.App',
-
+Navy.Class.instance('Navy.App', {
   _initRootBeforeCallback: null,
 
   initialize: function(){

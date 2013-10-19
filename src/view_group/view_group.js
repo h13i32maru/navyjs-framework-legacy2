@@ -1,6 +1,4 @@
-Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
-  CLASSNAME: 'Navy.ViewGroup.ViewGroup',
-
+Navy.Class('Navy.ViewGroup.ViewGroup', Navy.View.View, {
   _views: null,
   _initCallback: null,
 

@@ -1,6 +1,4 @@
-Navy.Transition.Fade = Navy.Class(Navy.Transition.Transition, {
-  CLASSNAME: 'Navy.Transition.Fade',
-
+Navy.Class('Navy.Transition.Fade', Navy.Transition.Transition, {
   $static: {
     initAnimationStyle: false
   },

@@ -1,6 +1,4 @@
-Navy.Root = Navy.Class.instance(Navy.ViewGroup.ViewGroup, {
-  CLASSNAME: 'Navy.Root',
-
+Navy.Class.instance('Navy.Root', Navy.ViewGroup.ViewGroup, {
   _sceneStack: null,
 
   /**
