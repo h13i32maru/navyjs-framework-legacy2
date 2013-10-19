@@ -13,7 +13,7 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
     $super(layout, callback);
   },
 
-  _createElement: function($super, layout) {
+  _createExtraElement: function($super, layout) {
     $super(layout);
 
     this._textElement = document.createElement('span');

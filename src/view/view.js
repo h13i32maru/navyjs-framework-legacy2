@@ -24,6 +24,7 @@ Navy.View.View = Navy.Class({
     this._layout = layout;
 
     this._createElement(layout);
+    this._createExtraElement(layout);
 
     this._execLink = this._execLink.bind(this);
 
@@ -67,7 +68,12 @@ Navy.View.View = Navy.Class({
     callback && setTimeout(callback, 0);
   },
 
+  _createExtraElement: function(layout) {
+    // pass
+  },
+
   _applyExtraLayout: function(layout) {
+    // pass
   },
 
   _loadExtraResource: function(layout, callback) {

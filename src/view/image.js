@@ -7,7 +7,7 @@ Navy.View.Image = Navy.Class(Navy.View.View, {
     $super(layout, callback);
   },
 
-  _createElement: function($super, layout) {
+  _createExtraElement: function($super, layout) {
     $super(layout);
 
     var imgElm = document.createElement('img');
