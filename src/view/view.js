@@ -38,17 +38,14 @@ Navy.View.View = Navy.Class({
     this._layout = layout;
 
     var notify = new Navy.Notify(2, function(){
-      this._setRawStyle(style);
-      this._setRawStyle(extraStyle);
+      this._applyLayout(layout);
+      this._applyExtraLayout(layout);
       callback && callback(this);
     }.bind(this));
 
     var pass = notify.pass.bind(notify);
 
-    var style = this._convertLayoutToStyle(layout);
     this._loadResource(layout, pass);
-
-    var extraStyle = this._convertLayoutToExtraStyle(layout);
     this._loadExtraResource(layout, pass);
   },
 
@@ -56,37 +53,21 @@ Navy.View.View = Navy.Class({
     this._element = document.createElement('div');
   },
 
-  _convertLayoutToStyle: function(layout) {
-    var style = {
-      position: 'absolute',
-      left: layout.pos.x + 'px',
-      top: layout.pos.y + 'px',
-      zIndex: layout.pos.z,
-      backgroundColor: layout.backgroundColor
-    };
+  _applyLayout: function(layout) {
+    this._element.style.position = 'absolute';
 
-    if (layout.sizePolicy == this.SIZE_POLICY_FIXED) {
-      style.width = layout.size.width + 'px';
-      style.height = layout.size.height + 'px';
-    } else {
-      layout.size = {};
-    }
-
-    if (layout.link) {
-      // fixme: とりあえずtouchendで代用してるが、tochstartとかもちゃんと使ってタップ判定すべき.
-      this._element.removeEventListener('touchend', this._execLink);
-      this._element.addEventListener('touchend', this._execLink);
-    }
-
-    return style;
+    this.setPos(layout.pos);
+    this.setSizePolicy(layout.sizePolicy);
+    this.setSize(layout.size);
+    this.setBackgroundColor(layout.backgroundColor);
+    this.setLink(layout.link);
   },
 
   _loadResource: function(layout, callback) {
     callback && setTimeout(callback, 0);
   },
 
-  _convertLayoutToExtraStyle: function(layout) {
-    return {};
+  _applyExtraLayout: function(layout) {
   },
 
   _loadExtraResource: function(layout, callback) {
@@ -168,6 +149,23 @@ Navy.View.View = Navy.Class({
     return this._parentView;
   },
 
+  destroy: function() {
+    this._parentView.removeView(this);
+    this._element = null;
+  },
+
+  toJSON: function() {
+    return this._layout;
+  },
+
+  _cloneObject: function(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  },
+
+  /*
+   * Viewのレイアウトに関するメソッド群
+   */
+
   isVisible: function() {
     if (this._element.style.display === 'none') {
       return false;
@@ -183,7 +181,7 @@ Navy.View.View = Navy.Class({
   },
 
   show: function() {
-    this._element.style.display = '';
+    this.setSizePolicy(this._layout.sizePolicy);
   },
 
   hide: function() {
@@ -192,12 +190,30 @@ Navy.View.View = Navy.Class({
 
   setBackgroundColor: function(backgroundColor) {
     this._layout.backgroundColor = backgroundColor;
-
-    this._setRawStyle({backgroundColor: backgroundColor});
+    this._element.style.backgroundColor = backgroundColor;
   },
 
   getBackgroundColor: function() {
     return this._layout.backgroundColor;
+  },
+
+  setSizePolicy: function(sizePolicy) {
+    switch(sizePolicy) {
+    case this.SIZE_POLICY_FIXED:
+      this._element.style.display = 'block';
+      break;
+    case this.SIZE_POLICY_WRAP_CONTENT:
+      this._element.style.display = 'inline';
+      break;
+    default:
+      throw new Error('unknown size policy. ' + this._layout.sizePolicy);
+    }
+
+    this._layout.sizePolicy = sizePolicy;
+  },
+
+  getSizePolicy: function() {
+    return this._layout.sizePolicy;
   },
 
   getSize: function() {
@@ -221,6 +237,14 @@ Navy.View.View = Navy.Class({
   },
 
   setSize: function(size) {
+    if (!size) {
+      return;
+    }
+
+    if (!this._layout.size) {
+      this._layout.size = {};
+    }
+
     var cssText = '';
 
     if (typeof size.width === 'number') {
@@ -267,15 +291,20 @@ Navy.View.View = Navy.Class({
   },
 
   getPos: function() {
-    return {x: this._layout.pos.x, y: this._layout.pos.y, z: this._layout.pos.z};
+    return this._cloneObject(this._layout.pos);
   },
 
-  destroy: function() {
-    this._parentView.removeView(this);
-    this._element = null;
+  setLink: function(link) {
+    this._layout.link = link;
+
+    if (link) {
+      this._element.addEventListener('touchend', this._execLink);
+    } else {
+      this._element.removeEventListener('touchend', this._execLink);
+    }
   },
 
-  toJSON: function() {
-    return this._layout;
+  getLink: function() {
+    return this._cloneObject(this._layout.link);
   }
 });

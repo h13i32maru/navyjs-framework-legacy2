@@ -20,27 +20,37 @@ Navy.View.Text = Navy.Class(Navy.View.View, {
     this._element.appendChild(this._textElement);
   },
 
-  _convertLayoutToExtraStyle: function($super, layout) {
-    var style = $super(layout);
+  _applyExtraLayout: function($super, layout) {
+    $super(layout);
 
     if (!layout.extra) {
-      return style;
+      return;
     }
 
-    if (typeof layout.extra.fontSize === "number") {
-      style.fontSize = layout.extra.fontSize + 'px';
-    }
-
-    if (layout.sizePolicy == this.SIZE_POLICY_WRAP_CONTENT) {
-      style.display = 'inline';
-    }
-
-    return style;
+    this.setFontSize(layout.extra.fontSize);
   },
 
   _loadExtraResource: function($super, layout, callback) {
-    this._textElement.textContent = layout.extra.text;
+    this.setText(layout.extra.text);
 
     $super(layout, callback);
+  },
+
+  setText: function(text) {
+    this._layout.extra.text = text;
+    this._textElement.textContent = text;
+  },
+
+  getText: function() {
+    return this._layout.extra.text;
+  },
+
+  setFontSize: function(fontSize) {
+    this._layout.extra.fontSize = fontSize;
+    this._element.style.fontSize = fontSize + 'px';
+  },
+
+  getFontSize: function() {
+    return this._layout.extra.fontSize;
   }
 });
