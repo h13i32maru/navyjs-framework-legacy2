@@ -70,13 +70,8 @@ Navy.Class._setByReflection = function _setByReflection(propertyName, value) {
 };
 
 Navy.Class._create = function _create(className, superClass, protoObj){
-  /*
-  var name = protoObj.CLASSNAME || 'Constructor';
-  name = name.replace(/[.]/g, '$');
+  var name = className.replace(/[.]/g, '$');
   var Constructor = new Function("return function " +  name + " () { if (typeof this.initialize === 'function' && !this.constructor.__manualInitialize__) { this.initialize.apply(this, arguments); } }")();
-  */
-  className = className.replace(/[.]/g, '$');
-  var Constructor = new Function("return function " +  className + " () { if (typeof this.initialize === 'function' && !this.constructor.__manualInitialize__) { this.initialize.apply(this, arguments); } }")();
 
   function EmptySuperClass(){}
   EmptySuperClass.prototype = superClass.prototype;
@@ -105,6 +100,8 @@ Navy.Class._create = function _create(className, superClass, protoObj){
   }
 
   Constructor.prototype.constructor = Constructor;
+  Constructor.prototype.$className = className;
+  Constructor.prototype.$class = Constructor;
 
   return Constructor;
 };

@@ -22,26 +22,26 @@ Navy.Class('Navy.Page', Navy.ViewGroup.ViewGroup, {
   },
 
   onCreate: function() {
-    console.log('onCreate', this.CLASSNAME);
+    console.log('onCreate', this.$className);
   },
 
   onResumeBefore: function(){
-    console.log('onResumeBefore', this.CLASSNAME);
+    console.log('onResumeBefore', this.$className);
   },
 
   onResumeAfter: function(){
-    console.log('onResumeAfter', this.CLASSNAME);
+    console.log('onResumeAfter', this.$className);
   },
 
   onPauseBefore: function(){
-    console.log('onPauseBefore', this.CLASSNAME);
+    console.log('onPauseBefore', this.$className);
   },
 
   onPauseAfter: function(){
-    console.log('onPauseAfter', this.CLASSNAME);
+    console.log('onPauseAfter', this.$className);
   },
 
   onDestroy: function(){
-    console.log('onDestroy', this.CLASSNAME);
+    console.log('onDestroy', this.$className);
   }
 });
