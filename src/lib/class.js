@@ -82,6 +82,21 @@ Navy.Class._create = function _create(className, superClass, protoObj){
 
   var key;
   var value;
+
+  if (protoObj.$static) {
+    for (key in protoObj.$static) {
+      var value = protoObj.$static[key];
+      if (typeof value === 'function') {
+        if (Navy.Class._argumentNames(value)[0] === '$super') {
+          value = Navy.Class._wrapFunction(superClass, key, value);
+        }
+      }
+      Constructor[key] = value;
+    }
+
+    delete protoObj.$static;
+  }
+
   for (key in protoObj) {
     value = protoObj[key];
 

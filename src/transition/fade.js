@@ -10,9 +10,9 @@ Navy.Class('Navy.Transition.Fade', Navy.Transition.Transition, {
     this._beforeView = beforeView;
     this._afterView = afterView;
 
-    if (!this.$static.initAnimationStyle) {
+    if (!this.$class.initAnimationStyle) {
       this._addAnimationStyle();
-      this.$static.initAnimationStyle = true;
+      this.$class.initAnimationStyle = true;
     }
 
     beforeView && beforeView._setRawStyle({webkitAnimation: '0.5s'});
