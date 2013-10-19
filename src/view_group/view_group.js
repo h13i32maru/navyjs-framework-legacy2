@@ -41,6 +41,15 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     }
   },
 
+  destroy: function($super) {
+    for (var viewId in this._views) {
+      var view = this._views[viewId];
+      view.destroy();
+    }
+
+    $super();
+  },
+
   setPage: function($super, page) {
     $super(page);
 
