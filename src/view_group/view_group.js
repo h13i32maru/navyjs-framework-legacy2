@@ -41,18 +41,6 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
     }
   },
 
-  findViewByElement: function(element) {
-    var views = this._views;
-    for (var viewId in views) {
-      var view = views[viewId];
-      if (view.getElement() === element) {
-        return view;
-      }
-    }
-
-    return null;
-  },
-
   setPage: function($super, page) {
     $super(page);
 
@@ -71,6 +59,53 @@ Navy.ViewGroup.ViewGroup = Navy.Class(Navy.View.View, {
       var view = views[viewId];
       view.setScene(scene);
     }
+  },
+
+  findViewById: function(id) {
+    var ids = id.split('.');
+
+    var view = this._views[ids[0]] || null;
+
+    if (view) {
+      if (ids.length === 1) {
+        return view;
+      } else {
+        ids.shift();
+        return view.findViewById(ids.join("."));
+      }
+    }
+
+    var views = this._views;
+    for (var viewId in views) {
+      var view = views[viewId];
+      if (view.findViewById) {
+        var result = view.findViewById(id);
+        if (result) {
+          return result;
+        }
+      }
+    }
+
+    return null;
+  },
+
+  findViewByElement: function(element) {
+    var views = this._views;
+    for (var viewId in views) {
+      var view = views[viewId];
+      if (view.getElement() === element) {
+        return view;
+      }
+
+      if (view.findViewByElement) {
+        var result = view.findViewByElement(element);
+        if (result) {
+          return result;
+        }
+      }
+    }
+
+    return null;
   },
 
   getAllViews: function() {
