@@ -203,22 +203,18 @@ Navy.View.View = Navy.Class({
   getSize: function() {
     switch (this._layout.sizePolicy) {
     case this.SIZE_POLICY_WRAP_CONTENT:
+      if (!this.isVisible()) {
+        return {width: -1, height: -1};
+      }
+
+      // FIXME: view groupの場合clientではサイズがとれずscrollでとれる. 調査必要.
       if (this._element.clientWidth || this._element.clientHeight) {
-        return {
-          width: this._element.clientWidth,
-          height: this._element.clientHeight
-        };
+        return {width: this._element.clientWidth, height: this._element.clientHeight};
       } else {
-        return {
-          width: this._element.scrollWidth,
-          height: this._element.scrollHeight
-        };
+        return {width: this._element.scrollWidth, height: this._element.scrollHeight};
       }
     case this.SIZE_POLICY_FIXED:
-      return {
-        width: this._layout.size.width,
-        height: this._layout.size.height
-      };
+      return {width: this._layout.size.width, height: this._layout.size.height};
     default:
       throw new Error('unknown size policy. ' + this._layout.sizePolicy);
     }
