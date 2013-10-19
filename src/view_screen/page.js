@@ -2,6 +2,10 @@ Navy.Page = Navy.Class(Navy.ViewGroup.ViewGroup, {
   CLASSNAME: 'Navy.Page',
 
   initialize: function($super, layout, callback) {
+    $super(layout, callback);
+  },
+
+  setLayout: function($super, layout, callback) {
     // シーン、ページの場合はsize, posは固定値でよい
     layout.pos = {x:0, y:0};
     layout.sizePolicy = this.SIZE_POLICY_FIXED;
