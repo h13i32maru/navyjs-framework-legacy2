@@ -12,26 +12,7 @@ Navy.Scene = Navy.Class(Navy.ViewGroup.ViewGroup, {
         views[name].setPos({z: 100});
       }
       this.nextPage(layout.extra.page, callback.bind(null, this));
-
-//      //FIXME: remove debug code
-//      views[name].addRawEventListener('touchend', function(ev){
-//        ev.stopPropagation();
-//        Navy.Root.nextScene('Scene1');
-//      });
     }.bind(this));
-
-    //FIXME: remove debug code
-//    var cb = function(){
-//      if (this._pageStack.length < 5) {
-//        this.nextPage('Page' + (Date.now() % 2 + 1));
-//      } else {
-//        this._element.removeEventListener('touchend', cb);
-//        this._element.addEventListener('touchend', function cb(){
-//          this.backPage();
-//        }.bind(this));
-//      }
-//    }.bind(this);
-//    this._element.addEventListener('touchend', cb);
   },
 
   setLayout: function($super, layout, callback) {
